@@ -6,8 +6,9 @@ export function useTheme() {
   const [theme, setTheme] = useState<Theme>(() => {
     if (typeof window === 'undefined') return 'light';
     const stored = localStorage.getItem('theme') as Theme | null;
-    if (stored) return stored;
-    return window.matchMedia('(prefers-color-scheme: dark)').matches ? 'dark' : 'light';
+    if (stored === 'light' || stored === 'dark') return stored;
+    // Default to light regardless of OS preference; user can opt into dark via the toggle.
+    return 'light';
   });
 
   useEffect(() => {
