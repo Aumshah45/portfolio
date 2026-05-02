@@ -29,33 +29,47 @@
   <line x1="60" y1="100" x2="1140" y2="100" stroke="#e8dfca" stroke-dasharray="4,6"/>
 
   <!-- Main headline -->
-  <text x="60" y="280" font-family="Fraunces, Georgia, serif" font-size="100" font-weight="500" fill="#14141a" letter-spacing="-3">
+  <text x="60" y="260" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="500" fill="#14141a" letter-spacing="-3">
     Hi, I&#8217;m
   </text>
-  <text x="540" y="280" font-family="Fraunces, Georgia, serif" font-size="100" font-style="italic" font-weight="500" fill="#b45309" letter-spacing="-3">
+  <text x="520" y="260" font-family="Fraunces, Georgia, serif" font-size="96" font-style="italic" font-weight="500" fill="#b45309" letter-spacing="-3">
     Aum.
   </text>
 
   <!-- Subhead -->
-  <text x="60" y="370" font-family="Fraunces, Georgia, serif" font-size="42" font-style="italic" fill="#4f4a42" letter-spacing="-1">
+  <text x="60" y="340" font-family="Fraunces, Georgia, serif" font-size="38" font-style="italic" fill="#4f4a42" letter-spacing="-1">
     Software engineer at Sun Life. Available for
   </text>
-  <text x="60" y="425" font-family="Fraunces, Georgia, serif" font-size="42" font-style="italic" fill="#4f4a42" letter-spacing="-1">
+  <text x="60" y="390" font-family="Fraunces, Georgia, serif" font-size="38" font-style="italic" fill="#4f4a42" letter-spacing="-1">
     freelance &#8212; web apps, dashboards, agentic AI.
   </text>
 
+  <!-- CTA Button -->
+  <g transform="translate(60, 440)">
+    <rect width="320" height="64" rx="14" fill="#14141a"/>
+    <text x="36" y="42" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#fbf7ef">
+      Start a project
+    </text>
+    <text x="245" y="42" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="500" fill="#b45309">
+      &#8594;
+    </text>
+  </g>
+  <text x="400" y="481" font-family="JetBrains Mono, ui-monospace, monospace" font-size="14" letter-spacing="2" fill="#8a8580">
+    OR EMAIL DIRECTLY  &#183;  REPLY WITHIN A DAY
+  </text>
+
   <!-- Bottom strip -->
-  <line x1="60" y1="510" x2="1140" y2="510" stroke="#e8dfca" stroke-dasharray="4,6"/>
-  <text x="60" y="560" font-family="JetBrains Mono, ui-monospace, monospace" font-size="16" letter-spacing="2.5" fill="#1e3a8a">
+  <line x1="60" y1="540" x2="1140" y2="540" stroke="#e8dfca" stroke-dasharray="4,6"/>
+  <text x="60" y="580" font-family="JetBrains Mono, ui-monospace, monospace" font-size="15" letter-spacing="2.5" fill="#1e3a8a">
     EMPLOYEE OF THE QUARTER  /  30+ SQUADS SERVED  /  PUBLISHED RESEARCHER
   </text>
-  <text x="60" y="595" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" letter-spacing="2" fill="#8a8580">
-    BENGALURU, IST  &#183;  AUMSHAH.DEV
+  <text x="60" y="608" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#8a8580">
+    BENGALURU, IST
   </text>
 
   <!-- Right-side monogram sticker -->
-  <g transform="translate(1020, 230) rotate(4)">
-    <rect width="130" height="130" rx="22" fill="#b45309"/>
-    <text x="65" y="105" font-family="Fraunces, serif" font-size="92" font-style="italic" font-weight="500" fill="#fbf7ef" text-anchor="middle">A.</text>
+  <g transform="translate(1010, 220) rotate(4)">
+    <rect width="140" height="140" rx="22" fill="#b45309"/>
+    <text x="70" y="112" font-family="Fraunces, serif" font-size="98" font-style="italic" font-weight="500" fill="#fbf7ef" text-anchor="middle">A.</text>
   </g>
 </svg>
