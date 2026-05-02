@@ -1,0 +1,61 @@
+<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+  <defs>
+    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
+      <stop offset="0%" stop-color="#fbf7ef"/>
+      <stop offset="100%" stop-color="#f3ecdb"/>
+    </linearGradient>
+    <radialGradient id="amber" cx="80%" cy="20%" r="55%">
+      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.55"/>
+      <stop offset="100%" stop-color="#ea580c" stop-opacity="0"/>
+    </radialGradient>
+    <radialGradient id="ink" cx="15%" cy="85%" r="55%">
+      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.45"/>
+      <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
+    </radialGradient>
+    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
+      <circle cx="14" cy="14" r="1.2" fill="#d4c8a8" opacity="0.7"/>
+    </pattern>
+  </defs>
+
+  <rect width="1200" height="630" fill="url(#bg)"/>
+  <rect width="1200" height="630" fill="url(#dots)" opacity="0.55"/>
+  <rect width="1200" height="630" fill="url(#amber)"/>
+  <rect width="1200" height="630" fill="url(#ink)"/>
+
+  <!-- Top wordmark strip -->
+  <text x="60" y="78" font-family="JetBrains Mono, ui-monospace, monospace" font-size="14" letter-spacing="3" fill="#8a8580" text-transform="uppercase">
+    AUM SHAH  ·  PORTFOLIO  ·  2026
+  </text>
+  <line x1="60" y1="100" x2="1140" y2="100" stroke="#e8dfca" stroke-dasharray="4,6"/>
+
+  <!-- Main headline -->
+  <text x="60" y="280" font-family="Fraunces, Georgia, serif" font-size="100" font-weight="500" fill="#14141a" letter-spacing="-3">
+    Hi, I&#8217;m
+  </text>
+  <text x="540" y="280" font-family="Fraunces, Georgia, serif" font-size="100" font-style="italic" font-weight="500" fill="#b45309" letter-spacing="-3">
+    Aum.
+  </text>
+
+  <!-- Subhead -->
+  <text x="60" y="370" font-family="Fraunces, Georgia, serif" font-size="42" font-style="italic" fill="#4f4a42" letter-spacing="-1">
+    Software engineer at Sun Life. Available for
+  </text>
+  <text x="60" y="425" font-family="Fraunces, Georgia, serif" font-size="42" font-style="italic" fill="#4f4a42" letter-spacing="-1">
+    freelance &#8212; web apps, dashboards, agentic AI.
+  </text>
+
+  <!-- Bottom strip -->
+  <line x1="60" y1="510" x2="1140" y2="510" stroke="#e8dfca" stroke-dasharray="4,6"/>
+  <text x="60" y="560" font-family="JetBrains Mono, ui-monospace, monospace" font-size="16" letter-spacing="2.5" fill="#1e3a8a">
+    EMPLOYEE OF THE QUARTER  /  30+ SQUADS SERVED  /  PUBLISHED RESEARCHER
+  </text>
+  <text x="60" y="595" font-family="JetBrains Mono, ui-monospace, monospace" font-size="13" letter-spacing="2" fill="#8a8580">
+    BENGALURU, IST  &#183;  AUMSHAH.DEV
+  </text>
+
+  <!-- Right-side monogram sticker -->
+  <g transform="translate(1020, 230) rotate(4)">
+    <rect width="130" height="130" rx="22" fill="#b45309"/>
+    <text x="65" y="105" font-family="Fraunces, serif" font-size="92" font-style="italic" font-weight="500" fill="#fbf7ef" text-anchor="middle">A.</text>
+  </g>
+</svg>
