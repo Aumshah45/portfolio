@@ -209,4 +209,78 @@ export const projects: Project[] = [
         'A production AI platform demonstrating agentic architecture design, end-to-end ownership, and technical mentorship.',
     },
   },
+  {
+    title: 'Numera',
+    slug: 'numera',
+    status: 'shipped',
+    statusLabel: 'Open Source',
+    problem:
+      'As software agents transact across borders they accumulate currency exposure, but hedging assumes a human, a broker relationship, and a trading UI built for people.',
+    outcome:
+      'Built a declarative FX / hedging API that agents call to neutralize exposure — spot or forward — with full cost attribution and server-side risk limits.',
+    metrics: [
+      { value: '6', label: 'Phases Shipped' },
+      { value: '60', label: 'Tests Green' },
+    ],
+    techTags: ['Python', 'FastAPI', 'MCP', 'SQLAlchemy'],
+    visualType: 'flow',
+    repoUrl: 'https://github.com/Aumshah45/Numera',
+    caseStudy: {
+      heroTitle: 'An agent-first FX & hedging API, built behind a regulated seam',
+      heroSubtitle:
+        'How I designed a declarative FX micro-execution service — spot conversion and covered-interest-parity forwards — with first-class cost attribution, server-side risk policy, and a swappable execution venue, exposed over both HTTP and MCP.',
+      meta: { role: 'Architecture & Solo Build', company: 'Self-directed', timeline: '2026' },
+      sections: [
+        {
+          label: '01 — The Problem',
+          heading: 'Agents carry FX risk with no way to manage it',
+          paragraphs: [
+            'As software agents start paying suppliers and settling invoices across currencies, they accumulate exposure they cannot manage. Existing FX and hedging tools are built around human workflows — dashboards, relationship managers, minimum ticket sizes.',
+            'I wanted a clean, small-ticket, programmatic primitive: declare an exposure, get it neutralized, and see exactly what it cost — to the basis point.',
+          ],
+        },
+        {
+          label: '02 — The Approach',
+          heading: 'A pure core behind one regulated seam',
+          paragraphs: [
+            'I built a hexagonal core — pure domain logic behind ports, with swappable adapters — so the one regulated piece, execution, lives behind a single seam that a licensed partner could later implement with no change above it.',
+            'Agents declare an exposure; the system decides convert versus hedge, prices it (real mid-market rate for spot, covered interest-rate parity for forwards), executes against a simulated venue, and returns a machine-readable fill with itemized cost attribution. Risk policy is enforced server-side, before any trade.',
+            'Money is never a float: amounts are integer minor units computed with decimals and half-even rounding, and every fill reconciles exactly to its all-in rate.',
+          ],
+        },
+        {
+          label: '03 — Tech Stack',
+          heading: 'Typed, tested, dual-surface',
+          paragraphs: [],
+        },
+        {
+          label: '04 — Results',
+          heading: 'One core, two surfaces, a contract-tested seam',
+          paragraphs: [
+            'The same use-cases are exposed over a typed HTTP API and an MCP server with behavioural parity, backed by in-memory or SQLite persistence behind the repository ports.',
+            'A venue contract suite runs against two independent execution-venue implementations, proving the seam; a sequence of agent calls cannot breach its mandate; and any order is reconstructable from an append-only audit trail with a double-entry ledger.',
+          ],
+        },
+      ],
+      beforeAfter: {
+        before: { value: 'Trading desk', description: 'Humans, dashboards, minimums' },
+        after: { value: 'One API call', description: 'Declare exposure → attributed fill' },
+      },
+      techStack: [
+        { name: 'Python', color: 'blue' },
+        { name: 'FastAPI', color: 'green' },
+        { name: 'MCP', color: 'pink' },
+        { name: 'SQLAlchemy', color: 'yellow' },
+        { name: 'Pydantic', color: 'pink' },
+        { name: 'REST', color: 'blue' },
+      ],
+      resultMetrics: [
+        { value: 'HTTP + MCP', label: 'Dual Surfaces, One Core' },
+        { value: 'CIP', label: 'Forward Pricing' },
+        { value: '60', label: 'Tests · mypy · ruff' },
+      ],
+      resultSummary:
+        'A portfolio-grade system that proves the hard parts — exact money math, honest cost attribution, server-side risk policy, and a contract-tested venue seam — while deliberately staying behind a simulated venue, since real execution is a regulated, deferred milestone.',
+    },
+  },
 ];

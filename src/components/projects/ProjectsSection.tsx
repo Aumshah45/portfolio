@@ -23,6 +23,7 @@ const marquee = [
   { value: '85%', label: 'AI accuracy, document pipeline' },
   { value: '4', label: 'graduate engineers mentored' },
   { value: '2', label: 'senior-engineer recognitions, one week' },
+  { value: 'HTTP+MCP', label: 'dual-surface fx hedging api' },
 ];
 
 export function ProjectsSection() {
@@ -47,7 +48,7 @@ export function ProjectsSection() {
             <ScrollReveal>
               <SectionLabel number="05" label="Selected work" />
               <h2 className="font-display text-[40px] sm:text-[56px] md:text-[68px] font-medium leading-[1.0] tracking-[-0.025em]">
-                Three projects,{' '}
+                Four projects,{' '}
                 <HandUnderline color="var(--color-accent)">
                   <span className="italic font-normal" style={{ fontVariationSettings: "'SOFT' 100" }}>
                     one through-line.
@@ -59,7 +60,7 @@ export function ProjectsSection() {
           <div className="col-span-12 md:col-span-4 md:col-start-9 md:mt-3">
             <ScrollReveal delay={0.1}>
               <p className="text-[15px] text-[var(--color-text-secondary)] leading-[1.65]">
-                Each one started as a fuzzy ask from someone who needed something working by next quarter. Picked because they show range &mdash; full-stack, cloud, agentic AI &mdash; and ownership end-to-end.
+                Each one started as a fuzzy ask from someone who needed something working by next quarter. Picked because they show range &mdash; full-stack, cloud, agentic AI, FX infrastructure &mdash; and ownership end-to-end.
               </p>
             </ScrollReveal>
           </div>
@@ -298,6 +299,66 @@ export function ProjectsSection() {
 
                     <div className="md:col-span-5 rounded-2xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-card)]/40">
                       <Visual />
+                    </div>
+                  </div>
+                </Link>
+              </ScrollReveal>
+            );
+          })()}
+
+          {/* PROJECT 04 — lavender spread, visual on the LEFT */}
+          {projects[3] && (() => {
+            const project = projects[3];
+            const Visual = visuals[project.visualType];
+            return (
+              <ScrollReveal>
+                <Link
+                  to={`/projects/${project.slug}`}
+                  className="block relative overflow-hidden rounded-3xl no-underline text-inherit group border border-[var(--color-border)]"
+                  style={{ background: 'var(--color-bg-lavender)' }}
+                >
+                  <div className="relative grid grid-cols-1 md:grid-cols-12 gap-8 p-8 md:p-12">
+                    <div className="md:col-span-5 md:order-1 order-2 rounded-2xl overflow-hidden border border-[var(--color-border)] bg-[var(--color-bg-card)]/40">
+                      <Visual />
+                    </div>
+
+                    <div className="md:col-span-7 md:order-2 order-1 flex flex-col">
+                      <div className="flex items-center gap-3 mb-6">
+                        <span className="font-mono text-[11px] uppercase tracking-[0.25em] text-[var(--color-lavender)]">
+                          Project &mdash; 04 / FX infra
+                        </span>
+                        <span className="h-px w-10 bg-[var(--color-lavender)] opacity-40" aria-hidden="true" />
+                        <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
+                          Open source
+                        </span>
+                      </div>
+
+                      <h3 className="font-display text-[32px] sm:text-[40px] md:text-[44px] font-medium leading-[1.05] tracking-[-0.02em] mb-5">
+                        FX risk, neutralized through{' '}
+                        <span className="italic text-[var(--color-lavender)]" style={{ fontVariationSettings: "'SOFT' 100" }}>
+                          one declarative API.
+                        </span>
+                      </h3>
+
+                      <p className="text-[14.5px] leading-[1.65] mb-5 text-[var(--color-text-secondary)] max-w-[560px]">
+                        {project.outcome} Spot and covered-interest-parity forwards, exact money math, and server-side risk limits &mdash; behind a contract-tested venue seam, exposed over both <strong className="text-[var(--color-text-primary)]">HTTP and MCP</strong>.
+                      </p>
+
+                      <div className="flex flex-wrap gap-2 mb-6">
+                        {project.techTags.map((t) => (
+                          <span
+                            key={t}
+                            className="inline-flex items-center gap-1.5 font-mono text-[11px] px-2.5 py-1 rounded-md bg-[var(--color-bg-card)] border border-[var(--color-border)] text-[var(--color-text-secondary)]"
+                          >
+                            <TechIcon name={t} size={12} />
+                            {t}
+                          </span>
+                        ))}
+                      </div>
+
+                      <span className="inline-flex items-center gap-2 font-mono text-[12px] uppercase tracking-[0.18em] text-[var(--color-lavender)] mt-auto group-hover:gap-3 transition-all">
+                        Read the case study <span aria-hidden="true">→</span>
+                      </span>
                     </div>
                   </div>
                 </Link>

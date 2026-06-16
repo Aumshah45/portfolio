@@ -30,7 +30,7 @@ export function useConsoleGreeting() {
    │   email — what you're trying to build, who it's  │
    │   for, and a rough timeline.                     │
    │                                                  │
-   │   → aumshah999.tech@gmail.com                         │
+   │   → aumshah999.tech@gmail.com                    │
    │                                                  │
    └──────────────────────────────────────────────────┘
     `;

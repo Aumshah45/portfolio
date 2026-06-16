@@ -24,6 +24,11 @@ const projectAccent: Record<string, { accent: string; soft: string; bg: string }
     soft: 'var(--color-green-bg)',
     bg: 'var(--color-bg-sage)',
   },
+  numera: {
+    accent: 'var(--color-lavender)',
+    soft: 'var(--color-lavender-soft)',
+    bg: 'var(--color-bg-lavender)',
+  },
 };
 
 export function CaseStudyPage() {
@@ -124,6 +129,20 @@ export function CaseStudyPage() {
               ))}
             </div>
           </ScrollReveal>
+
+          {project.repoUrl && (
+            <ScrollReveal delay={0.3}>
+              <a
+                href={project.repoUrl}
+                target="_blank"
+                rel="noopener noreferrer"
+                className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.2em] no-underline border transition-all hover:gap-3"
+                style={{ borderColor: palette.accent, color: palette.accent, background: palette.soft }}
+              >
+                View repository <span aria-hidden="true">↗</span>
+              </a>
+            </ScrollReveal>
+          )}
         </div>
       </section>
 
@@ -170,6 +189,16 @@ export function CaseStudyPage() {
                     <ArchArrow label="export" accent={palette.accent} />
                     <ArchNode icon="📈" label="Reports" sub="30+ squads" accent={palette.accent} />
                   </>
+                ) : project.slug === 'numera' ? (
+                  <>
+                    <ArchNode icon="🧾" label="Exposure" sub="Declared" accent={palette.accent} />
+                    <ArchArrow label="decide" accent={palette.accent} />
+                    <ArchNode icon="🧭" label="Decision" sub="Convert / hedge" accent={palette.accent} />
+                    <ArchArrow label="price" accent={palette.accent} />
+                    <ArchNode icon="💱" label="Pricer" sub="Mid + CIP" accent={palette.accent} />
+                    <ArchArrow label="execute" accent={palette.accent} />
+                    <ArchNode icon="🏦" label="Venue (sim)" sub="Fill + cost" accent={palette.accent} />
+                  </>
                 ) : (
                   <>
                     <ArchNode icon="📄" label="JSON / XML" sub="Input" accent={palette.accent} />
@@ -191,7 +220,7 @@ export function CaseStudyPage() {
       <div className="max-w-[820px] mx-auto px-6">
         {cs.sections.map((section, i) => {
           const sectionNum = section.label.match(/(\d+)/)?.[0] ?? String(i + 1).padStart(2, '0');
-          const sectionTitle = section.label.replace(/^\d+\s*[—\-]\s*/, '').trim();
+          const sectionTitle = section.label.replace(/^\d+\s*[—-]\s*/, '').trim();
 
           return (
             <ScrollReveal key={section.label}>

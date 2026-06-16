@@ -29,6 +29,8 @@ export interface Project {
   metrics: ProjectMetric[];
   techTags: string[];
   visualType: 'flow' | 'chart' | 'dashboard';
+  /** Optional public source repository for the project. */
+  repoUrl?: string;
   caseStudy: {
     heroTitle: string;
     heroSubtitle: string;
