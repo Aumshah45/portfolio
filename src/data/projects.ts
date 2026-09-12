@@ -225,6 +225,7 @@ export const projects: Project[] = [
     techTags: ['Python', 'FastAPI', 'MCP', 'SQLAlchemy'],
     visualType: 'flow',
     repoUrl: 'https://github.com/Aumshah45/Numera',
+    liveUrl: 'https://numera-ri3y.onrender.com/docs',
     caseStudy: {
       heroTitle: 'An agent-first FX & hedging API, built behind a regulated seam',
       heroSubtitle:

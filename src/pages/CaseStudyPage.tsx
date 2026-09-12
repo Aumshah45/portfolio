@@ -130,17 +130,32 @@ export function CaseStudyPage() {
             </div>
           </ScrollReveal>
 
-          {project.repoUrl && (
+          {(project.repoUrl || project.liveUrl) && (
             <ScrollReveal delay={0.3}>
-              <a
-                href={project.repoUrl}
-                target="_blank"
-                rel="noopener noreferrer"
-                className="inline-flex items-center gap-2 mt-8 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.2em] no-underline border transition-all hover:gap-3"
-                style={{ borderColor: palette.accent, color: palette.accent, background: palette.soft }}
-              >
-                View repository <span aria-hidden="true">↗</span>
-              </a>
+              <div className="flex flex-wrap gap-3 mt-8">
+                {project.liveUrl && (
+                  <a
+                    href={project.liveUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.2em] no-underline border transition-all hover:gap-3"
+                    style={{ borderColor: palette.accent, background: palette.accent, color: 'var(--color-bg)' }}
+                  >
+                    Try the live API <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+                {project.repoUrl && (
+                  <a
+                    href={project.repoUrl}
+                    target="_blank"
+                    rel="noopener noreferrer"
+                    className="inline-flex items-center gap-2 px-5 py-2.5 rounded-full font-mono text-[11px] uppercase tracking-[0.2em] no-underline border transition-all hover:gap-3"
+                    style={{ borderColor: palette.accent, color: palette.accent, background: palette.soft }}
+                  >
+                    View repository <span aria-hidden="true">↗</span>
+                  </a>
+                )}
+              </div>
             </ScrollReveal>
           )}
         </div>

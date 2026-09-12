@@ -31,6 +31,7 @@ export interface Project {
   visualType: 'flow' | 'chart' | 'dashboard';
   /** Optional public source repository for the project. */
   repoUrl?: string;
+  liveUrl?: string;
   caseStudy: {
     heroTitle: string;
     heroSubtitle: string;
