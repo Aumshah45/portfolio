@@ -7,5 +7,5 @@ export const siteConfig = {
   github: 'https://github.com/Aumshah45',
   resumeUrl: '/Aum_Shah_Resume.pdf',
   description:
-    'Full-stack developer building web applications, analytics dashboards, and AI automation systems. Available for freelance projects.',
+    'Full-stack and AI engineer building agentic AI systems, analytics platforms, and cloud-native services. Open to full-stack and AI engineering roles.',
 };

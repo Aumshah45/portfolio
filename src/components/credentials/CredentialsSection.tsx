@@ -33,7 +33,7 @@ export function CredentialsSection() {
         <div className="grid grid-cols-12 gap-6 mb-10">
           <div className="col-span-12 md:col-span-7">
             <ScrollReveal>
-              <SectionLabel number="09" label="The transcript" />
+              <SectionLabel number="08" label="The transcript" />
               <h2 className="font-display text-[36px] sm:text-[48px] md:text-[56px] font-medium leading-[1.05] tracking-[-0.025em]">
                 Where I&rsquo;ve worked, studied, and{' '}
                 <span className="italic" style={{ fontVariationSettings: "'SOFT' 100", color: 'var(--color-ink)' }}>

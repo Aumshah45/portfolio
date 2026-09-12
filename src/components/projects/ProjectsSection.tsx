@@ -46,7 +46,7 @@ export function ProjectsSection() {
         <div className="grid grid-cols-12 gap-6 mb-10">
           <div className="col-span-12 md:col-span-7">
             <ScrollReveal>
-              <SectionLabel number="05" label="Selected work" />
+              <SectionLabel number="04" label="Selected work" />
               <h2 className="font-display text-[40px] sm:text-[56px] md:text-[68px] font-medium leading-[1.0] tracking-[-0.025em]">
                 Four projects,{' '}
                 <HandUnderline color="var(--color-accent)">

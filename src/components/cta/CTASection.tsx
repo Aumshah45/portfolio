@@ -35,7 +35,7 @@ export function CTASection() {
 
       <div className="max-w-[920px] mx-auto">
         <ScrollReveal>
-          <SectionLabel number="10" label="The closing note" align="center" />
+          <SectionLabel number="09" label="The closing note" align="center" />
         </ScrollReveal>
 
         {/* Letter-style card */}
@@ -65,7 +65,7 @@ export function CTASection() {
                 You read the field notes, the bento, and probably the awkward Q&amp;A. That&rsquo;s already further than most people get on a portfolio site.
               </p>
               <p>
-                The next move is yours. Send me one paragraph &mdash; the problem, who it&rsquo;s for, and a rough timeline. I&rsquo;ll reply within a day with whether I think I&rsquo;m the right person, and if not, who is.
+                If you&rsquo;re hiring for a full-stack or AI engineering role, I&rsquo;d like to hear about it. Tell me what the team is building and what you&rsquo;d want me owning in the first six months. I reply within a day.
               </p>
             </div>
 

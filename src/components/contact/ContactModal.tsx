@@ -18,14 +18,14 @@ export function ContactModal({ isOpen, onClose }: Props) {
 
   function openGmail() {
     window.open(
-      `https://mail.google.com/mail/?view=cm&to=${siteConfig.email}&su=Project%20Inquiry`,
+      `https://mail.google.com/mail/?view=cm&to=${siteConfig.email}&su=Getting%20in%20touch`,
       '_blank'
     );
     onClose();
   }
 
   function openMailClient() {
-    window.location.href = `mailto:${siteConfig.email}?subject=Project%20Inquiry`;
+    window.location.href = `mailto:${siteConfig.email}?subject=Getting%20in%20touch`;
     onClose();
   }
 

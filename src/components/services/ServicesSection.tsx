@@ -61,10 +61,10 @@ export function ServicesSection() {
             <ScrollReveal delay={0.1}>
               <div className="border-l-2 border-[var(--color-coral)] pl-5">
                 <p className="text-[15px] text-[var(--color-text-secondary)] leading-[1.65] mb-3">
-                  Four shapes of project I keep getting hired for. The categories matter less than the underlying skill: I take a fuzzy problem, ask the right questions, and ship something that works on Monday morning.
+                  Four shapes of work I keep coming back to. The categories matter less than the underlying skill: I take a fuzzy problem, ask the right questions, and ship something that works on Monday morning.
                 </p>
                 <p className="text-[13px] text-[var(--color-text-muted)] italic">
-                  If your project doesn&rsquo;t fit cleanly into one of these, that&rsquo;s usually a good sign.
+                  The lines blur in practice &mdash; most real work turns out to be two or three of these at once.
                 </p>
               </div>
             </ScrollReveal>

@@ -41,7 +41,7 @@ export function SkillsSection() {
         <div className="grid grid-cols-12 gap-6 mb-10">
           <div className="col-span-12 md:col-span-6">
             <ScrollReveal>
-              <SectionLabel number="07" label="The toolbox" />
+              <SectionLabel number="06" label="The toolbox" />
               <h2 className="font-display text-[36px] sm:text-[48px] md:text-[56px] font-medium leading-[1.05] tracking-[-0.025em]">
                 Bigger means I&rsquo;ve actually{' '}
                 <span className="italic" style={{ fontVariationSettings: "'SOFT' 100", color: 'var(--color-lavender)' }}>

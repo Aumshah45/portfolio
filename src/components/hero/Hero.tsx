@@ -58,11 +58,12 @@ export function Hero() {
                   <span className="text-[var(--color-text-primary)] font-medium">Employee of the Quarter</span>.
                 </p>
                 <p>
-                  That experience convinced me to start building things for people outside of work too. I&rsquo;m opening up evenings and weekends to take on freelance projects &mdash; mostly internal tools, dashboards, and the occasional AI feature that{' '}
-                  <span className="italic" style={{ fontVariationSettings: "'SOFT' 100" }}>actually</span> earns its place.
+                  Since then I&rsquo;ve kept building the same way outside work &mdash; most recently{' '}
+                  <span className="text-[var(--color-text-primary)] font-medium">Numera</span>, an agent-native FX pricing API that exposes one hexagonal core over both REST and MCP. The through-line is the same everywhere: internal tools, data platforms, and AI features that{' '}
+                  <span className="italic" style={{ fontVariationSettings: "'SOFT' 100" }}>actually</span> earn their place.
                 </p>
                 <p className="text-[16px] sm:text-[17px] text-[var(--color-text-muted)]">
-                  If you&rsquo;ve got a fuzzy idea, an internal process running on duct tape and goodwill, or a feature your team keeps deferring &mdash; <button onClick={() => document.dispatchEvent(new CustomEvent('open-contact'))} className="text-[var(--color-coral)] font-medium underline-offset-4 hover:underline cursor-pointer font-[inherit] bg-transparent border-0 p-0">tell me about it</button>.
+                  I&rsquo;m now looking for my next role &mdash; full-stack or AI engineering, in Bengaluru or remote. If you&rsquo;re hiring for one, <button onClick={() => document.dispatchEvent(new CustomEvent('open-contact'))} className="text-[var(--color-coral)] font-medium underline-offset-4 hover:underline cursor-pointer font-[inherit] bg-transparent border-0 p-0">get in touch</button>.
                 </p>
               </div>
             </ScrollReveal>
@@ -108,7 +109,7 @@ export function Hero() {
                   <div>
                     <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-coral)] mb-1">Recently shipped</dt>
                     <dd className="text-[var(--color-text-primary)]">
-                      An agentic absence-claim assistant. Cut HR turnaround from a few days to a few minutes for routine cases.
+                      An agentic absence-claim assistant &mdash; three LangChain agents that cut claim review from 15 days to 3&ndash;4 on routine cases.
                     </dd>
                   </div>
 
@@ -130,7 +131,7 @@ export function Hero() {
                 <div className="mt-6 pt-4 border-t border-dashed border-[var(--color-border)] flex items-center gap-2">
                   <span className="w-[7px] h-[7px] bg-[var(--color-green)] rounded-full pulse-ring" />
                   <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-green)]">
-                    one freelance slot open &mdash; mid-2026
+                    open to new roles &mdash; bengaluru / remote
                   </span>
                 </div>
               </aside>

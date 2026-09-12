@@ -27,31 +27,31 @@ const qa = [
     bg: 'var(--color-bg-coral)',
   },
   {
-    q: 'What&rsquo;s the smallest project you&rsquo;d take on?',
+    q: 'What are you looking for next?',
     a: (
       <>
-        If you can describe what you need in two sentences and ship it in two weekends, I&rsquo;m in. My favourite size is{' '}
-        <span className="font-medium text-[var(--color-text-primary)]">4&ndash;8 weeks</span> &mdash; long enough to build something real, short enough that we both stay focused.
+        A team shipping AI into a real product, where I own something end-to-end &mdash; backend through deployment. Full-stack or AI engineering, Bengaluru or remote. I care more about the problem and the people reviewing my code than the logo on the door.
       </>
     ),
     accent: 'var(--color-ink)',
     bg: 'var(--color-bg-blueprint)',
   },
   {
-    q: 'What if the day job blows up and you go missing?',
+    q: 'What did you actually own, versus what was handed to you?',
     a: (
       <>
-        I work on freelance evenings and weekends only &mdash; never during day-job hours. If something at Sun Life suddenly needs all of me, I&rsquo;ll tell you the day it happens, not the week after. So far that&rsquo;s never cost a milestone.
+        The Copilot metrics platform was mine end to end &mdash; six weeks, solo, schema to deploy. The absence-claim system I architected and built alongside the trainees I was mentoring. On the document pipeline I owned the AWS orchestration and the component library. Happy to go line by line on any of them.
       </>
     ),
     accent: 'var(--color-mint)',
     bg: 'var(--color-bg-sage)',
   },
   {
-    q: 'Why hire you and not an agency?',
+    q: 'Why leave Sun Life?',
     a: (
       <>
-        An agency routes your project through three project managers and two timezones. You&rsquo;ll get me, directly, replying within hours. The trade-off is I take fewer projects &mdash; usually one or two at a time. If we&rsquo;re a fit, you&rsquo;re not waiting in a queue.
+        Nothing dramatic. Two good years &mdash; I shipped real things, got recognised for them, and learned how a large regulated organisation actually works. But I&rsquo;ve now built the same shape of thing a few times over, and I want to be somewhere the AI work{' '}
+        <span className="italic" style={{ fontVariationSettings: "'SOFT' 100" }}>is</span> the product, not a project inside it.
       </>
     ),
     accent: 'var(--color-lavender)',
@@ -78,7 +78,7 @@ export function HonestQA() {
         <div className="grid grid-cols-12 gap-6 mb-14">
           <div className="col-span-12 md:col-span-7">
             <ScrollReveal>
-              <SectionLabel number="04" label="Honest answers" />
+              <SectionLabel number="03" label="Honest answers" />
               <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-coral)] mb-4">
                 A page I wish other portfolios had
               </p>
@@ -95,7 +95,7 @@ export function HonestQA() {
           <div className="hidden md:flex col-span-4 col-start-9 items-end">
             <ScrollReveal delay={0.1}>
               <p className="text-[14px] text-[var(--color-text-secondary)] leading-[1.6] border-l-2 border-[var(--color-coral)] pl-4 italic">
-                I wrote these the way I&rsquo;d answer them on a discovery call. If yours isn&rsquo;t here, it&rsquo;s usually a one-line email away.
+                I wrote these the way I&rsquo;d answer them on a first call. If yours isn&rsquo;t here, it&rsquo;s usually a one-line email away.
               </p>
             </ScrollReveal>
           </div>

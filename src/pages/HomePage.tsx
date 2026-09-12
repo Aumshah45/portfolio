@@ -1,6 +1,5 @@
 import { Hero } from '../components/hero/Hero';
 import { ServicesSection } from '../components/services/ServicesSection';
-import { ProcessSection } from '../components/process/ProcessSection';
 import { HonestQA } from '../components/qa/HonestQA';
 import { ProjectsSection } from '../components/projects/ProjectsSection';
 import { AboutSection } from '../components/about/AboutSection';
@@ -14,7 +13,6 @@ export function HomePage() {
     <>
       <Hero />
       <ServicesSection />
-      <ProcessSection />
       <HonestQA />
       <ProjectsSection />
       <AboutSection />

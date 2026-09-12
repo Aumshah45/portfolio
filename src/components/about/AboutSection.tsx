@@ -35,7 +35,7 @@ export function AboutSection() {
           {/* LEFT — the letter */}
           <div className="col-span-12 lg:col-span-8">
             <ScrollReveal>
-              <SectionLabel number="06" label="A short letter" />
+              <SectionLabel number="05" label="A short letter" />
             </ScrollReveal>
 
             {/* Letterhead */}

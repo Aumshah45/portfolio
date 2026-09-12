@@ -18,8 +18,8 @@ export function useConsoleGreeting() {
    │   Hi, I'm Aum.                                   │
    │                                                  │
    │   You opened the console — that's already a      │
-   │   good sign. I'm currently taking on freelance   │
-   │   projects (web apps, dashboards, agentic AI).   │
+   │   good sign. I'm a full-stack / AI engineer,     │
+   │   currently open to new roles.                   │
    │                                                  │
    │   The site you're looking at: hand-built in      │
    │   React, TypeScript, Tailwind v4, Framer Motion. │
@@ -27,8 +27,8 @@ export function useConsoleGreeting() {
    │                                                  │
    │   If something here intrigues you, the best way  │
    │   to start a conversation is one paragraph by    │
-   │   email — what you're trying to build, who it's  │
-   │   for, and a rough timeline.                     │
+   │   email — what your team is building and what    │
+   │   you'd want me owning.                          │
    │                                                  │
    │   → aumshah999.tech@gmail.com                    │
    │                                                  │

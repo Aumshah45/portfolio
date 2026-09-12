@@ -133,7 +133,7 @@ export function RecognitionSection() {
         <div className="grid grid-cols-12 gap-6 mb-10">
           <div className="col-span-12 md:col-span-7">
             <ScrollReveal>
-              <SectionLabel number="08" label="Recognition" />
+              <SectionLabel number="07" label="Recognition" />
               <h2 className="font-display text-[36px] sm:text-[48px] md:text-[56px] font-medium leading-[1.05] tracking-[-0.025em]">
                 Words from people I&rsquo;ve{' '}
                 <HandUnderline color="var(--color-accent)">
