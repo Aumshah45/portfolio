@@ -1,161 +1,68 @@
-import type { CSSProperties } from 'react';
-import { ScrollReveal } from '../effects/ScrollReveal';
-import { HandUnderline } from '../ui/HandUnderline';
-import { SectionLabel } from '../ui/SectionLabel';
-import { ScrollNudge } from './ScrollNudge';
+import type { ReactNode } from 'react';
+import { motion } from 'framer-motion';
+import { ReplayButton } from '../ui/ReplayButton';
+import { tapeline, wrap } from '../ui/styles';
+import { DaySheet } from './DaySheet';
 
-export function Hero() {
-  const sectionStyle = {
-    '--section-accent': 'var(--color-accent)',
-    '--section-accent-soft': 'var(--color-accent-soft)',
-  } as CSSProperties;
+interface Props {
+  /** False while the cold open is on screen; the hero stages in once it lifts. */
+  opened: boolean;
+}
 
+function Enter({ opened, delay, children }: { opened: boolean; delay: number; children: ReactNode }) {
   return (
-    <section className="relative pt-20 pb-14 overflow-hidden" style={sectionStyle}>
-      {/* Soft background colour zones */}
-      <div className="hero-dots absolute inset-0 -z-10" aria-hidden="true" />
-      <div
-        className="color-blob -z-10"
-        style={{ background: 'var(--color-peach)', width: 520, height: 520, top: -150, right: -160 }}
-        aria-hidden="true"
-      />
-      <div
-        className="color-blob -z-10"
-        style={{ background: 'var(--color-ink)', width: 380, height: 380, bottom: -120, left: -100, opacity: 0.30 }}
-        aria-hidden="true"
-      />
+    <motion.div
+      initial={false}
+      animate={opened ? { opacity: 1, y: 0 } : { opacity: 0, y: 14 }}
+      transition={{ duration: 0.9, delay: opened ? delay : 0, ease: [0.16, 1, 0.3, 1] }}
+    >
+      {children}
+    </motion.div>
+  );
+}
 
-      <div className="max-w-[1200px] mx-auto px-6">
-        {/* Section marker + locator line */}
-        <ScrollReveal>
-          <SectionLabel number="01" label="Hello" />
-          <p className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-text-muted)] mb-10">
-            Bengaluru, IST &middot; I write my own copy, ship my own code, and reply to my own emails.
-          </p>
-        </ScrollReveal>
+const openContact = () => document.dispatchEvent(new CustomEvent('open-contact'));
 
-        {/* Two-column: long personal note on the left, "right now" panel on the right */}
-        <div className="grid grid-cols-12 gap-8 lg:gap-14">
-          <div className="col-span-12 lg:col-span-8">
-            <ScrollReveal delay={0.05}>
-              <h1 className="font-display text-[56px] sm:text-[80px] md:text-[96px] font-medium leading-[0.95] tracking-[-0.035em] mb-10">
-                Hi, I&rsquo;m{' '}
-                <span className="italic" style={{ fontVariationSettings: "'SOFT' 100", color: 'var(--color-accent)' }}>
-                  Aum.
-                </span>
+export function Hero({ opened }: Props) {
+  return (
+    <section
+      id="top"
+      className="relative scroll-mt-[60px] overflow-hidden border-b border-line-2"
+      style={{ background: 'radial-gradient(ellipse 120% 90% at 50% 0%, var(--hero-glow), transparent 55%), var(--color-bg)' }}
+    >
+      <div className={wrap}>
+        <div className="grid grid-cols-[7fr_5fr] items-start gap-14 pb-[72px] pt-16 max-[900px]:grid-cols-1 max-[900px]:gap-9 max-[900px]:pb-14 max-[900px]:pt-11">
+          <div>
+            <Enter opened={opened} delay={0}>
+              <div className={`${tapeline} mb-[26px]`}>
+                <span>Master tape · Aum Shah</span>
+                <span>SC 01 · Market open</span>
+              </div>
+            </Enter>
+            <Enter opened={opened} delay={0.12}>
+              <h1 className="m-0 mb-[22px] text-balance text-[clamp(42px,6.2vw,86px)] font-extrabold leading-[0.98] tracking-[-0.03em] text-title stretch-112">
+                AUM, as in <span className="text-acc [text-shadow:var(--glow)]">assets under management.</span>
               </h1>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.12}>
-              <div className="space-y-5 text-[18px] sm:text-[20px] text-[var(--color-text-secondary)] leading-[1.55] max-w-[640px]">
-                <p>
-                  I&rsquo;m a software engineer at{' '}
-                  <span className="text-[var(--color-text-primary)] font-medium">Sun Life Global Solutions</span>. Last July, two senior engineers sent me back-to-back recognitions in the same week &mdash; for a{' '}
-                  <HandUnderline color="var(--color-accent)">
-                    <span className="italic" style={{ fontVariationSettings: "'SOFT' 100" }}>Copilot productivity platform</span>
-                  </HandUnderline>{' '}
-                  I&rsquo;d built alone over six weeks. It&rsquo;s now used by 30+ engineering squads across the company, and it earned me{' '}
-                  <span className="text-[var(--color-text-primary)] font-medium">Employee of the Quarter</span>.
-                </p>
-                <p>
-                  Since then I&rsquo;ve kept building the same way outside work &mdash; most recently{' '}
-                  <span className="text-[var(--color-text-primary)] font-medium">Numera</span>, an agent-native FX pricing API that exposes one hexagonal core over both REST and MCP. The through-line is the same everywhere: internal tools, data platforms, and AI features that{' '}
-                  <span className="italic" style={{ fontVariationSettings: "'SOFT' 100" }}>actually</span> earn their place.
-                </p>
-                <p className="text-[16px] sm:text-[17px] text-[var(--color-text-muted)]">
-                  I&rsquo;m now looking for my next role &mdash; full-stack or AI engineering, in Bengaluru or remote. If you&rsquo;re hiring for one, <button onClick={() => document.dispatchEvent(new CustomEvent('open-contact'))} className="text-[var(--color-coral)] font-medium underline-offset-4 hover:underline cursor-pointer font-[inherit] bg-transparent border-0 p-0">get in touch</button>.
-                </p>
+            </Enter>
+            <Enter opened={opened} delay={0.24}>
+              <p className="m-0 mb-[30px] max-w-[56ch] text-[17px] text-text-2">
+                Full-stack and AI engineer at Sun Life. Every project here is a position: entered, annotated, and audited against a
+                number.
+              </p>
+            </Enter>
+            <Enter opened={opened} delay={0.36}>
+              <div className="flex flex-wrap gap-3">
+                <ReplayButton onClick={openContact}>Get in touch</ReplayButton>
+                <ReplayButton variant="ghost" to="/#work">
+                  Open the holdings
+                </ReplayButton>
               </div>
-            </ScrollReveal>
-
-            <ScrollReveal delay={0.22}>
-              <div className="flex gap-3.5 flex-wrap items-center mt-10">
-                <a
-                  href="#work"
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-[14px] font-semibold bg-[var(--color-text-primary)] text-[var(--color-bg)] hover:-translate-y-0.5 hover:shadow-[0_10px_30px_-10px_rgba(0,0,0,0.5)] transition-all duration-300"
-                >
-                  Read about a project
-                  <span aria-hidden="true">→</span>
-                </a>
-                <button
-                  onClick={() => document.dispatchEvent(new CustomEvent('open-contact'))}
-                  className="inline-flex items-center gap-2 px-6 py-3.5 rounded-xl text-[14px] font-medium bg-transparent text-[var(--color-text-primary)] border border-[var(--color-border-strong)] hover:bg-[var(--color-text-primary)] hover:text-[var(--color-bg)] transition-all duration-300 cursor-pointer font-[inherit]"
-                >
-                  Email me directly
-                </button>
-              </div>
-            </ScrollReveal>
+            </Enter>
           </div>
-
-          {/* Right column: a real "right now" panel — specific, dated, mundane */}
-          <div className="col-span-12 lg:col-span-4">
-            <ScrollReveal delay={0.18}>
-              <aside className="paper-grain relative rounded-2xl border border-[var(--color-border)] bg-[var(--color-bg-card)] p-6 lg:sticky lg:top-28">
-                <div className="flex items-baseline justify-between mb-5 pb-3 border-b border-dashed border-[var(--color-border)]">
-                  <h2 className="font-display text-[22px] font-medium tracking-tight">What I&rsquo;m up to</h2>
-                  <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)]">
-                    updated this week
-                  </span>
-                </div>
-
-                <dl className="space-y-4 text-[13.5px] leading-[1.5]">
-                  <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-ink)] mb-1">Day-job project</dt>
-                    <dd className="text-[var(--color-text-primary)]">
-                      Owning the <span className="font-medium">Copilot Productivity Platform</span> end-to-end &mdash; now extending it with cohort analytics across 30+ engineering squads.
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-coral)] mb-1">Recently shipped</dt>
-                    <dd className="text-[var(--color-text-primary)]">
-                      An agentic absence-claim assistant &mdash; three LangChain agents that cut claim review from 15 days to 3&ndash;4 on routine cases.
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-mint)] mb-1">Sharpening</dt>
-                  <dd className="text-[var(--color-text-primary)]">
-                      Multi-agent systems &mdash; how to make several models reason together without making a mess. Re-reading <em>Tidy First?</em> &mdash; turns out most of it isn&rsquo;t code.
-                    </dd>
-                  </div>
-
-                  <div>
-                    <dt className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-lavender)] mb-1">Hot take of the week</dt>
-                    <dd className="text-[var(--color-text-primary)]">
-                      Most &ldquo;we need AI for this&rdquo; meetings should end with a clearer form and a five-line bug-fix.
-                    </dd>
-                  </div>
-                </dl>
-
-                <div className="mt-6 pt-4 border-t border-dashed border-[var(--color-border)] flex items-center gap-2">
-                  <span className="w-[7px] h-[7px] bg-[var(--color-green)] rounded-full pulse-ring" />
-                  <span className="font-mono text-[10px] uppercase tracking-[0.18em] text-[var(--color-green)]">
-                    open to new roles &mdash; bengaluru / remote
-                  </span>
-                </div>
-              </aside>
-            </ScrollReveal>
-          </div>
+          <Enter opened={opened} delay={0.24}>
+            <DaySheet />
+          </Enter>
         </div>
-
-        {/* Bottom: credentials as a written paragraph, not a card grid */}
-        <ScrollReveal delay={0.35}>
-          <div className="mt-16 max-w-[820px] flex items-end justify-between gap-6 border-t border-dashed border-[var(--color-border)] pt-7 flex-wrap">
-            <p className="text-[14px] sm:text-[15px] text-[var(--color-text-muted)] leading-[1.7] flex-1 min-w-[260px]">
-            <span className="font-mono text-[10px] uppercase tracking-[0.2em] text-[var(--color-text-muted)] mr-3">background</span>
-            B.Tech in Computer Science from SRM Institute (CGPA{' '}
-            <span className="text-[var(--color-text-primary)] font-medium">9.08/10</span>),{' '}
-            published researcher on{' '}
-            <span className="text-[var(--color-coral)]">IoT botnet detection</span> at the 15th ICCCNT,{' '}
-            <span className="text-[var(--color-accent)]">AWS</span> and{' '}
-            <span className="text-[var(--color-mint)]">Stanford ML</span> certified, currently{' '}
-            <span className="text-[var(--color-ink)]">Associate Analyst Developer at Sun Life</span>{' '}
-            after fifteen months as a Graduate Engineer Trainee.
-            </p>
-            <ScrollNudge />
-          </div>
-        </ScrollReveal>
       </div>
     </section>
   );

@@ -1,75 +1,51 @@
-<svg xmlns="http://www.w3.org/2000/svg" viewBox="0 0 1200 630" width="1200" height="630">
+<svg xmlns="http://www.w3.org/2000/svg" width="1200" height="630" viewBox="0 0 1200 630">
   <defs>
-    <linearGradient id="bg" x1="0%" y1="0%" x2="100%" y2="100%">
-      <stop offset="0%" stop-color="#fbf7ef"/>
-      <stop offset="100%" stop-color="#f3ecdb"/>
+    <radialGradient id="glow" cx="30%" cy="0%" r="90%">
+      <stop offset="0" stop-color="#2ee787" stop-opacity="0.14"/>
+      <stop offset="0.6" stop-color="#2ee787" stop-opacity="0"/>
+    </radialGradient>
+    <linearGradient id="spark" x1="0" y1="0" x2="0" y2="1">
+      <stop offset="0" stop-color="#2ee787" stop-opacity="0.3"/>
+      <stop offset="1" stop-color="#2ee787" stop-opacity="0"/>
     </linearGradient>
-    <radialGradient id="amber" cx="80%" cy="20%" r="55%">
-      <stop offset="0%" stop-color="#ea580c" stop-opacity="0.55"/>
-      <stop offset="100%" stop-color="#ea580c" stop-opacity="0"/>
-    </radialGradient>
-    <radialGradient id="ink" cx="15%" cy="85%" r="55%">
-      <stop offset="0%" stop-color="#1e3a8a" stop-opacity="0.45"/>
-      <stop offset="100%" stop-color="#1e3a8a" stop-opacity="0"/>
-    </radialGradient>
-    <pattern id="dots" width="28" height="28" patternUnits="userSpaceOnUse">
-      <circle cx="14" cy="14" r="1.2" fill="#d4c8a8" opacity="0.7"/>
+    <pattern id="scan" width="4" height="3" patternUnits="userSpaceOnUse">
+      <rect width="4" height="1" fill="#e9f2ec" fill-opacity="0.025"/>
     </pattern>
   </defs>
 
-  <rect width="1200" height="630" fill="url(#bg)"/>
-  <rect width="1200" height="630" fill="url(#dots)" opacity="0.55"/>
-  <rect width="1200" height="630" fill="url(#amber)"/>
-  <rect width="1200" height="630" fill="url(#ink)"/>
+  <rect width="1200" height="630" fill="#060c09"/>
+  <rect width="1200" height="630" fill="url(#glow)"/>
 
-  <!-- Top wordmark strip -->
-  <text x="60" y="78" font-family="JetBrains Mono, ui-monospace, monospace" font-size="14" letter-spacing="3" fill="#8a8580" text-transform="uppercase">
-    AUM SHAH  ·  PORTFOLIO  ·  2026
-  </text>
-  <line x1="60" y1="100" x2="1140" y2="100" stroke="#e8dfca" stroke-dasharray="4,6"/>
-
-  <!-- Main headline -->
-  <text x="60" y="260" font-family="Fraunces, Georgia, serif" font-size="96" font-weight="500" fill="#14141a" letter-spacing="-3">
-    Hi, I&#8217;m
-  </text>
-  <text x="520" y="260" font-family="Fraunces, Georgia, serif" font-size="96" font-style="italic" font-weight="500" fill="#b45309" letter-spacing="-3">
-    Aum.
+  <!-- ticker tape -->
+  <rect width="1200" height="44" fill="#04180e"/>
+  <rect y="44" width="1200" height="1" fill="#2ee787" fill-opacity="0.25"/>
+  <text x="40" y="28" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="16" fill="#9fd8b6" letter-spacing="1">
+    AUM/SHAH <tspan fill="#2ee787">▲ open to offers</tspan>   /   CPLT <tspan fill="#2ee787">▲ 30+ squads</tspan>   /   CLMS <tspan fill="#2ee787">▼ 15d to 3-4d</tspan>   /   NMRA <tspan fill="#2ee787">▲ HTTP + MCP</tspan>
   </text>
 
-  <!-- Subhead -->
-  <text x="60" y="340" font-family="Fraunces, Georgia, serif" font-size="38" font-style="italic" fill="#4f4a42" letter-spacing="-1">
-    Software engineer at Sun Life. Available for
-  </text>
-  <text x="60" y="390" font-family="Fraunces, Georgia, serif" font-size="38" font-style="italic" fill="#4f4a42" letter-spacing="-1">
-    freelance &#8212; web apps, dashboards, agentic AI.
-  </text>
-
-  <!-- CTA Button -->
-  <g transform="translate(60, 440)">
-    <rect width="320" height="64" rx="14" fill="#14141a"/>
-    <text x="36" y="42" font-family="Inter, system-ui, sans-serif" font-size="20" font-weight="600" fill="#fbf7ef">
-      Start a project
-    </text>
-    <text x="245" y="42" font-family="Inter, system-ui, sans-serif" font-size="22" font-weight="500" fill="#b45309">
-      &#8594;
-    </text>
+  <!-- slate stripe -->
+  <g transform="translate(80 118)">
+    <rect width="30" height="30" fill="#f2ead8"/>
+    <path d="M6 0h7L0 13V6zM20 0h7L0 27v-7zM30 4v7L11 30H4zM30 18v7l-5 5h-7z" fill="#060c09"/>
+    <text x="48" y="21" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="17" fill="#2ee787" letter-spacing="5">SC 01 · MARKET OPEN</text>
   </g>
-  <text x="400" y="481" font-family="JetBrains Mono, ui-monospace, monospace" font-size="14" letter-spacing="2" fill="#8a8580">
-    OR EMAIL DIRECTLY  &#183;  REPLY WITHIN A DAY
-  </text>
 
-  <!-- Bottom strip -->
-  <line x1="60" y1="540" x2="1140" y2="540" stroke="#e8dfca" stroke-dasharray="4,6"/>
-  <text x="60" y="580" font-family="JetBrains Mono, ui-monospace, monospace" font-size="15" letter-spacing="2.5" fill="#1e3a8a">
-    EMPLOYEE OF THE QUARTER  /  30+ SQUADS SERVED  /  PUBLISHED RESEARCHER
-  </text>
-  <text x="60" y="608" font-family="JetBrains Mono, ui-monospace, monospace" font-size="12" letter-spacing="2" fill="#8a8580">
-    BENGALURU, IST
-  </text>
+  <!-- wordmark -->
+  <text x="76" y="300" font-family="'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-weight="800" font-size="118" fill="#f2ead8" letter-spacing="-3">AUM SHAH</text>
+  <text x="80" y="372" font-family="'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-weight="700" font-size="44" fill="#2ee787" letter-spacing="-1">as in assets under management.</text>
+  <text x="80" y="428" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="21" fill="#9db8a7" letter-spacing="1">Full-stack &amp; AI engineer · agentic systems · Python APIs</text>
 
-  <!-- Right-side monogram sticker -->
-  <g transform="translate(1010, 220) rotate(4)">
-    <rect width="140" height="140" rx="22" fill="#b45309"/>
-    <text x="70" y="112" font-family="Fraunces, serif" font-size="98" font-style="italic" font-weight="500" fill="#fbf7ef" text-anchor="middle">A.</text>
+  <!-- sparkline -->
+  <g transform="translate(80 470)">
+    <path d="M0,86 L90,74 180,78 270,52 360,58 450,32 540,36 630,14 1040,0 L1040,100 L0,100 Z" fill="url(#spark)"/>
+    <polyline points="0,86 90,74 180,78 270,52 360,58 450,32 540,36 630,14 1040,0" fill="none" stroke="#2ee787" stroke-width="3" stroke-linejoin="round" stroke-linecap="round"/>
   </g>
+
+  <!-- footer strip -->
+  <rect y="586" width="1200" height="44" fill="#04120b"/>
+  <rect y="586" width="1200" height="1" fill="#2ee787" fill-opacity="0.2"/>
+  <text x="80" y="614" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="15" fill="#5f8a72" letter-spacing="4">SC01 OPEN   SC02 HOLDINGS   SC03 INTERMISSION   SC04 PLAYER   SC05 REEL   SC06 CREDITS</text>
+  <rect x="80" y="584" width="150" height="3" fill="#2ee787"/>
+
+  <rect width="1200" height="630" fill="url(#scan)"/>
 </svg>

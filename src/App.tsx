@@ -3,7 +3,9 @@ import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { CursorGlow } from './components/effects/CursorGlow';
+import { Playhead } from './components/layout/Playhead';
+import { TickerTape } from './components/cinema/TickerTape';
+import { Scanlines } from './components/cinema/Scanlines';
 import { CommandPalette } from './components/command-palette/CommandPalette';
 import { ContactModal } from './components/contact/ContactModal';
 import { useCommandPalette } from './hooks/useCommandPalette';
@@ -16,19 +18,18 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ de
 
 function RouteFallback() {
   return (
-    <div className="min-h-[60vh] flex items-center justify-center">
-      <span className="font-mono text-[11px] uppercase tracking-[0.22em] text-[var(--color-text-muted)] animate-pulse">
-        loading…
-      </span>
+    <div className="flex min-h-[60vh] items-center justify-center">
+      <span className="animate-pulse font-mono text-[11px] uppercase tracking-[0.22em] text-acc-dim">loading reel…</span>
     </div>
   );
 }
 
 function ScrollToTop() {
-  const { pathname } = useLocation();
+  const { pathname, hash } = useLocation();
   useEffect(() => {
-    window.scrollTo(0, 0);
-  }, [pathname]);
+    // Hash arrivals are scrolled to their scene by the page itself.
+    if (!hash) window.scrollTo(0, 0);
+  }, [pathname, hash]);
   return null;
 }
 
@@ -74,16 +75,18 @@ export default function App() {
       <ScrollToTop />
       <a
         href="#main"
-        className="sr-only focus:not-sr-only focus:fixed focus:top-3 focus:left-3 focus:z-[200] focus:bg-[var(--color-text-primary)] focus:text-[var(--color-bg)] focus:px-4 focus:py-2 focus:rounded-lg focus:font-mono focus:text-[12px] focus:uppercase focus:tracking-[0.18em] no-underline"
+        className="sr-only no-underline focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[200] focus:rounded-panel focus:bg-acc focus:px-4 focus:py-2 focus:font-mono focus:text-[12px] focus:uppercase focus:tracking-[0.18em] focus:text-acc-contrast"
       >
         Skip to content
       </a>
-      <CursorGlow />
+      <Scanlines />
       <Navbar onCommandPalette={open} onContact={openContact} />
+      <TickerTape />
       <main id="main">
         <AnimatedRoutes />
       </main>
       <Footer />
+      <Playhead />
       <CommandPalette isOpen={isOpen} onClose={close} />
       <ContactModal isOpen={contactOpen} onClose={closeContact} />
     </BrowserRouter>

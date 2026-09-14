@@ -1,51 +1,55 @@
 import { useEffect, useState } from 'react';
 
 /**
- * Returns the id of whichever section is currently dominant in the viewport.
- * Uses IntersectionObserver. Pass the list of section ids to track.
+ * Returns the id of the section crossing a thin band at the middle of the
+ * viewport. A band (rather than intersection ratios) works for sections of any
+ * height. Pass `watchKey` (e.g. the pathname) so the hook re-attaches when the
+ * sections mount after a route transition.
  */
-export function useActiveSection(sectionIds: string[]): string | null {
+export function useActiveSection(sectionIds: readonly string[], watchKey?: string): string | null {
   const [active, setActive] = useState<string | null>(null);
 
   useEffect(() => {
-    if (typeof window === 'undefined') return;
+    let intersection: IntersectionObserver | null = null;
+    let mutation: MutationObserver | null = null;
+    const visible = new Set<string>();
 
-    const elements = sectionIds
-      .map((id) => document.getElementById(id))
-      .filter((el): el is HTMLElement => el !== null);
+    const attach = (): boolean => {
+      const elements = sectionIds
+        .map((id) => document.getElementById(id))
+        .filter((el): el is HTMLElement => el !== null);
+      if (elements.length === 0) return false;
 
-    if (elements.length === 0) return;
-
-    // Track each section's intersection ratio; pick the one with the largest
-    const ratios = new Map<string, number>();
-
-    const observer = new IntersectionObserver(
-      (entries) => {
-        for (const entry of entries) {
-          ratios.set(entry.target.id, entry.intersectionRatio);
-        }
-        let bestId: string | null = null;
-        let bestRatio = 0;
-        for (const [id, ratio] of ratios) {
-          if (ratio > bestRatio) {
-            bestRatio = ratio;
-            bestId = id;
+      intersection = new IntersectionObserver(
+        (entries) => {
+          for (const entry of entries) {
+            if (entry.isIntersecting) visible.add(entry.target.id);
+            else visible.delete(entry.target.id);
           }
-        }
-        if (bestId && bestRatio > 0.15) {
-          setActive(bestId);
-        }
-      },
-      {
-        // Generous offset so the active section flips a bit before it's fully in view
-        rootMargin: '-30% 0px -50% 0px',
-        threshold: [0, 0.15, 0.3, 0.5, 0.75, 1],
-      }
-    );
+          const current = sectionIds.find((id) => visible.has(id));
+          if (current) setActive(current);
+        },
+        { rootMargin: '-45% 0px -54% 0px', threshold: 0 },
+      );
+      elements.forEach((el) => intersection!.observe(el));
+      return true;
+    };
 
-    elements.forEach((el) => observer.observe(el));
-    return () => observer.disconnect();
-  }, [sectionIds]);
+    if (!attach()) {
+      mutation = new MutationObserver(() => {
+        if (attach()) {
+          mutation?.disconnect();
+          mutation = null;
+        }
+      });
+      mutation.observe(document.body, { childList: true, subtree: true });
+    }
+
+    return () => {
+      intersection?.disconnect();
+      mutation?.disconnect();
+    };
+  }, [sectionIds, watchKey]);
 
   return active;
 }

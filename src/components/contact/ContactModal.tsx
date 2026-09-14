@@ -1,4 +1,4 @@
-import { useState } from 'react';
+import { useEffect, useState } from 'react';
 import { motion, AnimatePresence } from 'framer-motion';
 import { siteConfig } from '../../data/siteConfig';
 
@@ -7,8 +7,20 @@ interface Props {
   onClose: () => void;
 }
 
+const option =
+  'flex w-full cursor-pointer items-center justify-center gap-2 rounded-panel px-4 py-3 text-[14px] font-semibold transition-colors';
+
 export function ContactModal({ isOpen, onClose }: Props) {
   const [copied, setCopied] = useState(false);
+
+  useEffect(() => {
+    if (!isOpen) return;
+    const onKey = (e: KeyboardEvent) => {
+      if (e.key === 'Escape') onClose();
+    };
+    window.addEventListener('keydown', onKey);
+    return () => window.removeEventListener('keydown', onKey);
+  }, [isOpen, onClose]);
 
   function copyEmail() {
     navigator.clipboard.writeText(siteConfig.email);
@@ -37,57 +49,55 @@ export function ContactModal({ isOpen, onClose }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[999] bg-black/50 backdrop-blur-sm flex items-center justify-center px-4"
+          className="fixed inset-0 z-[999] flex items-center justify-center bg-[rgba(4,10,7,0.6)] px-4 backdrop-blur-sm"
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <motion.div
-            initial={{ opacity: 0, scale: 0.95, y: 10 }}
+            role="dialog"
+            aria-modal="true"
+            aria-labelledby="contact-title"
+            initial={{ opacity: 0, scale: 0.97, y: 10 }}
             animate={{ opacity: 1, scale: 1, y: 0 }}
-            exit={{ opacity: 0, scale: 0.95, y: 10 }}
+            exit={{ opacity: 0, scale: 0.97, y: 10 }}
             transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-            className="w-[400px] max-w-full bg-[var(--color-bg-card)] border border-[var(--color-border)] rounded-2xl shadow-2xl overflow-hidden"
+            className="w-[420px] max-w-full overflow-hidden rounded-panel border border-line bg-bg-2 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
           >
-            <div className="p-6 text-center">
-              <div className="w-12 h-12 rounded-xl bg-[var(--color-accent-soft)] flex items-center justify-center text-2xl mx-auto mb-4">
-                &#9993;
-              </div>
-              <h3 className="text-lg font-bold mb-1">Get in Touch</h3>
-              <p className="text-[13px] text-[var(--color-text-secondary)] mb-5">
-                Choose how you'd like to reach out
-              </p>
+            <div className="flex items-center justify-between border-b border-line-2 px-6 py-3 font-mono text-[10px] uppercase tracking-[0.2em]">
+              <span className="text-acc">SC 06 · Post-credits</span>
+              <span className="text-acc-dim">reply within a day</span>
+            </div>
+            <div className="p-6">
+              <h3 id="contact-title" className="m-0 mb-1 text-[22px] font-bold tracking-[-0.02em] text-title stretch-106">
+                Get in touch
+              </h3>
+              <p className="m-0 mb-5 text-[13.5px] text-text-2">Pick whichever is quickest for you.</p>
 
-              <div className="bg-[var(--color-bg-alt)] rounded-xl px-4 py-3 mb-5 flex items-center justify-between gap-2">
-                <span className="text-[14px] font-mono text-[var(--color-text-secondary)] truncate">
-                  {siteConfig.email}
-                </span>
+              <div className="mb-5 flex items-center justify-between gap-2 rounded-panel border border-line-2 bg-bg-3 px-4 py-3">
+                <span className="truncate font-mono text-[13px] text-text">{siteConfig.email}</span>
                 <button
+                  type="button"
                   onClick={copyEmail}
-                  className="shrink-0 text-[12px] font-semibold px-3 py-1.5 rounded-lg bg-[var(--color-bg-card)] border border-[var(--color-border)] hover:border-[var(--color-border-hover)] transition-colors cursor-pointer"
+                  className="shrink-0 cursor-pointer rounded-panel border border-line bg-transparent px-3 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.14em] text-acc transition-colors hover:bg-tint"
                 >
-                  {copied ? 'Copied!' : 'Copy'}
+                  {copied ? 'Copied' : 'Copy'}
                 </button>
               </div>
 
               <div className="flex flex-col gap-2.5">
-                <button
-                  onClick={openGmail}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-[14px] font-semibold bg-[var(--color-accent)] text-white hover:bg-[var(--color-accent-hover)] transition-colors cursor-pointer"
-                >
+                <button type="button" onClick={openGmail} className={`${option} border-0 bg-acc text-acc-contrast hover:bg-acc-hover`}>
                   Open in Gmail
                 </button>
-                <button
-                  onClick={openMailClient}
-                  className="w-full flex items-center justify-center gap-2 px-4 py-3 rounded-xl text-[14px] font-medium border border-[var(--color-border)] hover:border-[var(--color-border-hover)] hover:bg-[var(--color-bg-alt)] transition-colors cursor-pointer"
-                >
-                  Open Default Email App
+                <button type="button" onClick={openMailClient} className={`${option} border border-line bg-transparent text-acc hover:bg-tint`}>
+                  Open default email app
                 </button>
               </div>
             </div>
 
-            <div className="px-6 py-3 border-t border-[var(--color-border)] text-center">
+            <div className="border-t border-line-2 px-6 py-3 text-center">
               <button
+                type="button"
                 onClick={onClose}
-                className="text-[12px] text-[var(--color-text-muted)] hover:text-[var(--color-text-secondary)] transition-colors cursor-pointer"
+                className="cursor-pointer border-0 bg-transparent font-mono text-[10.5px] uppercase tracking-[0.18em] text-acc-dim transition-colors hover:text-acc"
               >
                 Cancel
               </button>
