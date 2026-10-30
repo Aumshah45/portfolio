@@ -1,7 +1,5 @@
-import { useCallback, useEffect, useState } from 'react';
+import { useEffect } from 'react';
 import { useLocation } from 'react-router-dom';
-import { ColdOpen } from '../components/cinema/ColdOpen';
-import { shouldPlayColdOpen } from '../components/cinema/coldOpenSession';
 import { Hero } from '../components/hero/Hero';
 import { HoldingsSection } from '../components/holdings/HoldingsSection';
 import { IntermissionSection } from '../components/intermission/IntermissionSection';
@@ -10,8 +8,6 @@ import { ReelSection } from '../components/reel/ReelSection';
 import { CreditsSection } from '../components/credits/CreditsSection';
 
 export function HomePage() {
-  const [playing, setPlaying] = useState(shouldPlayColdOpen);
-  const finish = useCallback(() => setPlaying(false), []);
   const { hash, key } = useLocation();
 
   // Scene links arrive as /#id, including from case-study pages.
@@ -24,8 +20,7 @@ export function HomePage() {
 
   return (
     <>
-      {playing && <ColdOpen onDone={finish} />}
-      <Hero opened={!playing} />
+      <Hero />
       <HoldingsSection />
       <IntermissionSection />
       <PlayerSection />

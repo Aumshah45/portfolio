@@ -24,7 +24,7 @@ export function GameBox() {
     const onKey = (e: KeyboardEvent) => {
       if (e.key !== 'ArrowRight' && e.key !== 'ArrowLeft') return;
       if (document.querySelector('[aria-modal="true"]')) return;
-      if ((e.target as HTMLElement | null)?.closest('input, textarea, select, [contenteditable="true"]')) return;
+      if ((e.target as HTMLElement | null)?.closest('input, textarea, select, [contenteditable="true"], [role="tablist"]')) return;
       e.preventDefault();
       setCur((c) => clamp(c + (e.key === 'ArrowRight' ? 1 : -1)));
     };

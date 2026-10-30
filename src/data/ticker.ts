@@ -10,6 +10,7 @@ export const ticker: TickerEntry[] = [
   { symbol: 'CLMS', quote: '▼ 15d to 3-4d', direction: 'up' },
   { symbol: 'DOCS', quote: '▲ 85% automated', direction: 'up' },
   { symbol: 'NMRA', quote: '▲ HTTP + MCP', direction: 'up' },
+  { symbol: 'AGWT', quote: '▲ 4 check levels', direction: 'up' },
   { symbol: 'PAPER', quote: '▲ IEEE ICCCNT', direction: 'up' },
   { symbol: 'CHESS', quote: '▲ the long game', direction: 'up' },
   { symbol: 'CRICKET', quote: 'test-match purist', direction: 'down' },

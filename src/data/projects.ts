@@ -284,4 +284,78 @@ export const projects: Project[] = [
         'A portfolio-grade system that proves the hard parts — exact money math, honest cost attribution, server-side risk policy, and a contract-tested venue seam — while deliberately staying behind a simulated venue, since real execution is a regulated, deferred milestone.',
     },
   },
+  {
+    title: 'AgentWatch',
+    slug: 'agentwatch',
+    status: 'shipped',
+    statusLabel: 'Open Source',
+    problem:
+      'AI agents depend on third-party MCP servers that can break silently: a renamed tool, a changed input schema, or a plausible but wrong answer, all behind a healthy HTTP 200.',
+    outcome:
+      'Built synthetic agent probes that test MCP servers end to end, from reachability to LLM-judged answers, and rank them on a reliability dashboard.',
+    metrics: [
+      { value: 'L1-L4', label: 'Check Ladder' },
+      { value: '33', label: 'Tests Green' },
+    ],
+    techTags: ['TypeScript', 'Next.js', 'MCP', 'Drizzle'],
+    visualType: 'flow',
+    repoUrl: 'https://github.com/Aumshah45/ChnAI',
+    caseStudy: {
+      heroTitle: 'Uptime monitoring for the agent supply chain',
+      heroSubtitle:
+        'How I built synthetic agent probes that call MCP servers the way an agent does, catch schema drift and silent semantic failures, and turn the results into a ranked reliability score.',
+      meta: { role: 'Architecture & Solo Build', company: 'Self-directed', timeline: '2026' },
+      sections: [
+        {
+          label: '01 — The Problem',
+          heading: '“HTTP 200, wrong answer”',
+          paragraphs: [
+            'Agents increasingly call tools through third-party MCP servers, and most of those servers have no SLOs, no error budgets and no drift detection. Existing agent observability traces your own agent from the inside; nothing tests the dependencies from the outside.',
+            'The failures that hurt are the quiet ones: a tool renamed, an input schema changed, or an answer that looks plausible but is wrong. A ping reports all of them as healthy.',
+          ],
+        },
+        {
+          label: '02 — The Approach',
+          heading: 'Probe like an agent, then judge the answer',
+          paragraphs: [
+            'Every server runs through a four-level check ladder: L1 reachability and latency, L2 the MCP handshake and tool listing, L3 real tool calls on canary tools with fixed inputs, and L4 an LLM judge that scores the output against a known-good baseline.',
+            'Tool schemas are normalised and hashed on every run, so a renamed or changed tool shows up as drift. Scoring and incident transitions are pure functions over stored results, so they can be replayed and recomputed whenever the weights change.',
+            'The LLM judge is cost-controlled from day one: identical outputs reuse a cached judgment, judging is sampled or triggered by anomalies, and calls are capped per server per day. If the judge is unavailable, the score falls back to the structural checks.',
+          ],
+        },
+        {
+          label: '03 — Tech Stack',
+          heading: 'A typed monorepo with two deployable units',
+          paragraphs: [],
+        },
+        {
+          label: '04 — Results',
+          heading: 'Ranked, alerted, deploy-ready',
+          paragraphs: [
+            'A long-running prober and a read-only Next.js dashboard share one domain core. The dashboard ranks servers by a 0-100 composite score and shows latency history, incidents and schema-drift timelines.',
+            'Alerts fire once per incident transition, never per failed check. Storage runs on SQLite locally and switches to Postgres through the same store functions, with the Postgres path tested via PGlite.',
+          ],
+        },
+      ],
+      beforeAfter: {
+        before: { value: 'Ping', description: 'Reachable, so assumed healthy' },
+        after: { value: 'L1-L4', description: 'Handshake, real tool calls, judged answers' },
+      },
+      techStack: [
+        { name: 'TypeScript', color: 'blue' },
+        { name: 'Next.js', color: 'pink' },
+        { name: 'MCP SDK', color: 'green' },
+        { name: 'Drizzle', color: 'yellow' },
+        { name: 'SQLite / Postgres', color: 'blue' },
+        { name: 'Claude Haiku', color: 'pink' },
+      ],
+      resultMetrics: [
+        { value: 'L1-L4', label: 'Check Ladder' },
+        { value: '0-100', label: 'Composite Score' },
+        { value: '33', label: 'Tests · Mock MCP Server' },
+      ],
+      resultSummary:
+        'A working monitor for a dependency nobody watches: probes that behave like agents, a judge whose cost is engineered down, and scoring that stays replayable because it is pure.',
+    },
+  },
 ];

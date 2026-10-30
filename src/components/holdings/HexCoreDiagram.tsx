@@ -8,24 +8,29 @@ interface Props {
   core: { label: string; note: string };
   portB: Port;
   seam: string;
+  className?: string;
 }
 
 function PortCard({ port }: { port: Port }) {
   return (
-    <div className="rounded-panel border border-line-2 bg-bg-2 px-[18px] py-4">
+    <div className="w-full max-w-[440px] rounded-panel border border-line-2 bg-bg-2 px-[18px] py-4 text-left">
       <div className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-acc">{port.label}</div>
       <p className="m-0 text-[13px] text-text-2">{port.body}</p>
     </div>
   );
 }
 
-/** Hexagonal architecture: one pure core, a port on each side, one seam to the regulated venue. */
-export function HexCoreDiagram({ portA, core, portB, seam }: Props) {
+/**
+ * Hexagonal architecture: one pure core, an interface on each side, one seam
+ * to the regulated venue. Side by side when its own box is wide enough,
+ * otherwise stacked with the core between the two interfaces.
+ */
+export function HexCoreDiagram({ portA, core, portB, seam, className = 'mb-2.5 mt-9' }: Props) {
   return (
-    <div className="mb-2.5 mt-9">
-      <div className="grid grid-cols-[1fr_auto_1fr] items-center gap-[22px] max-md:grid-cols-1 max-md:justify-items-center max-md:text-center">
+    <div className={`@container ${className}`}>
+      <div className="grid grid-cols-1 items-center justify-items-center gap-4 @xl:grid-cols-[1fr_auto_1fr] @xl:gap-[22px]">
         <PortCard port={portA} />
-        <div className="relative flex aspect-[1/1.05] w-[190px] flex-col items-center justify-center gap-1.5 px-6">
+        <div className="relative flex aspect-[1/1.05] w-[170px] flex-col items-center justify-center gap-1.5 px-6 @xl:w-[190px]">
           <svg
             aria-hidden="true"
             viewBox="0 0 100 100"

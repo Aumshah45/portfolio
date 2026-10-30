@@ -6,6 +6,7 @@ import { Footer } from './components/layout/Footer';
 import { Playhead } from './components/layout/Playhead';
 import { TickerTape } from './components/cinema/TickerTape';
 import { Scanlines } from './components/cinema/Scanlines';
+import { ColdOpenProvider } from './components/cinema/ColdOpenProvider';
 import { CommandPalette } from './components/command-palette/CommandPalette';
 import { ContactModal } from './components/contact/ContactModal';
 import { useCommandPalette } from './hooks/useCommandPalette';
@@ -79,16 +80,18 @@ export default function App() {
       >
         Skip to content
       </a>
-      <Scanlines />
-      <Navbar onCommandPalette={open} onContact={openContact} />
-      <TickerTape />
-      <main id="main">
-        <AnimatedRoutes />
-      </main>
-      <Footer />
-      <Playhead />
-      <CommandPalette isOpen={isOpen} onClose={close} />
-      <ContactModal isOpen={contactOpen} onClose={closeContact} />
+      <ColdOpenProvider>
+        <Scanlines />
+        <Navbar onCommandPalette={open} onContact={openContact} />
+        <TickerTape />
+        <main id="main">
+          <AnimatedRoutes />
+        </main>
+        <Footer />
+        <Playhead />
+        <CommandPalette isOpen={isOpen} onClose={close} />
+        <ContactModal isOpen={contactOpen} onClose={closeContact} />
+      </ColdOpenProvider>
     </BrowserRouter>
   );
 }

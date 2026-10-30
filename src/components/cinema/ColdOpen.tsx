@@ -1,47 +1,57 @@
 import { useEffect, useRef } from 'react';
+import type { CSSProperties } from 'react';
 import { createPortal } from 'react-dom';
-import { markColdOpenSeen } from './coldOpenSession';
 
 interface Props {
+  scene: string;
+  take: number;
+  /** Route-change takes run shorter than the first take of a visit. */
+  quick: boolean;
   onDone: () => void;
 }
 
-const rows = [
-  ['Prod', 'Aum Shah · Portfolio'],
-  ['Scene', '01 · Market open'],
-  ['Take', '2'],
-];
+const timing = {
+  full: { clapAt: 0.9, fadeAt: 1.9, fadeFor: 0.6, doneAt: 2600 },
+  quick: { clapAt: 0.35, fadeAt: 0.95, fadeFor: 0.45, doneAt: 1450 },
+};
 
 /**
- * Clapperboard cold open. Always dark (it is film, not page). Portalled to
- * <body> because the route wrapper animates transform, which would otherwise
- * turn this fixed overlay into one positioned against the page.
+ * Clapperboard slate. Always dark (it is film, not page). Portalled to <body>
+ * because the route wrapper animates transform, which would otherwise pin
+ * this fixed overlay to the page instead of the viewport.
  */
-export function ColdOpen({ onDone }: Props) {
+export function ColdOpen({ scene, take, quick, onDone }: Props) {
   const finishRef = useRef<() => void>(() => {});
+  const t = quick ? timing.quick : timing.full;
 
   useEffect(() => {
     let finished = false;
     const finish = () => {
       if (finished) return;
       finished = true;
-      markColdOpenSeen();
       onDone();
     };
     finishRef.current = finish;
-    const timer = window.setTimeout(finish, 2600);
+    const timer = window.setTimeout(finish, t.doneAt);
     window.addEventListener('keydown', finish);
     return () => {
       window.clearTimeout(timer);
       window.removeEventListener('keydown', finish);
     };
-  }, [onDone]);
+  }, [onDone, t.doneAt]);
+
+  const rows = [
+    ['Prod', 'Aum Shah · Portfolio'],
+    ['Scene', scene],
+    ['Take', String(take)],
+  ];
 
   return createPortal(
     <div
       aria-hidden="true"
       onClick={() => finishRef.current()}
       className="slate-overlay fixed inset-0 z-[100] flex cursor-pointer items-center justify-center bg-[#050507]"
+      style={{ '--clap-at': `${t.clapAt}s`, '--fade-at': `${t.fadeAt}s`, '--fade-for': `${t.fadeFor}s` } as CSSProperties}
     >
       <div className="relative w-[min(400px,84vw)] rounded-panel border border-[#2a2830] bg-[#131117] px-[30px] pb-[18px] pt-[26px] shadow-[0_40px_90px_rgba(0,0,0,0.7)]">
         <div
@@ -56,7 +66,7 @@ export function ColdOpen({ onDone }: Props) {
             }`}
           >
             <span>{label}</span>
-            <b className="text-right font-medium text-[#f2ead8]">{value}</b>
+            <b className="text-balance text-right font-medium text-[#f2ead8]">{value}</b>
           </div>
         ))}
       </div>

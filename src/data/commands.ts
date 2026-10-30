@@ -3,7 +3,7 @@ import type { Command } from '../types';
 export const commands: Command[] = [
   // Scenes, in playhead order
   { id: 'top', icon: '01', title: 'SC01 · Market open', description: 'Back to the top', action: 'scroll', target: 'top' },
-  { id: 'work', icon: '02', title: 'SC02 · Holdings', description: 'Case studies: Copilot, claims agents, Numera', action: 'scroll', target: 'work' },
+  { id: 'work', icon: '02', title: 'SC02 · Holdings', description: 'Case studies: Copilot, claims agents, Numera, AgentWatch, documents', action: 'scroll', target: 'work' },
   { id: 'honest', icon: '03', title: 'SC03 · Intermission', description: 'Five questions, answered straight', action: 'scroll', target: 'honest' },
   { id: 'about', icon: '04', title: 'SC04 · The player', description: 'Letter, credentials, career scoresheet', action: 'scroll', target: 'about' },
   { id: 'recognition', icon: '05', title: 'SC05 · The reel', description: 'Awards & recognitions', action: 'scroll', target: 'recognition' },

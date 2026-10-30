@@ -32,7 +32,7 @@
 
   <!-- wordmark -->
   <text x="76" y="300" font-family="'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-weight="800" font-size="118" fill="#f2ead8" letter-spacing="-3">AUM SHAH</text>
-  <text x="80" y="372" font-family="'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-weight="700" font-size="44" fill="#2ee787" letter-spacing="-1">as in assets under management.</text>
+  <text x="80" y="372" font-family="'Helvetica Neue', Arial, 'DejaVu Sans', sans-serif" font-weight="700" font-size="44" fill="#2ee787" letter-spacing="-1">as in Asset Under Management.</text>
   <text x="80" y="428" font-family="Menlo, 'DejaVu Sans Mono', monospace" font-size="21" fill="#9db8a7" letter-spacing="1">Full-stack &amp; AI engineer · agentic systems · Python APIs</text>
 
   <!-- sparkline -->

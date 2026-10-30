@@ -6,23 +6,31 @@ interface Props {
   className?: string;
 }
 
-/** A hand-off pipeline: each stage owns one job and passes the result along. */
+/**
+ * A hand-off pipeline: each stage owns one job and passes the result along.
+ * Lays out by its own width (container query), so it reads as a row on a
+ * full page and as a top-to-bottom chain inside a narrow panel.
+ */
 export function RelayDiagram({ nodes, className = 'my-8' }: Props) {
   return (
-    <ol
-      className={`grid list-none gap-3.5 p-0 md:grid-cols-[repeat(var(--cols),minmax(0,1fr))] ${className}`}
-      style={{ '--cols': nodes.length } as CSSProperties}
-    >
-      {nodes.map((node) => (
-        <li
-          key={node.title}
-          className="relative rounded-panel border border-line-2 bg-bg-2 p-5 after:absolute after:-right-[15px] after:top-1/2 after:z-10 after:-translate-y-1/2 after:text-[18px] after:text-acc-dim after:content-['→'] last:after:hidden max-md:after:hidden"
-        >
-          <div className="mb-2 font-mono text-[9.5px] uppercase tracking-[0.2em] text-acc">{node.label}</div>
-          <b className="mb-1.5 block text-[15.5px] font-[650] text-title">{node.title}</b>
-          <p className="m-0 text-[13px] text-text-2">{node.body}</p>
-        </li>
-      ))}
-    </ol>
+    <div className={`@container ${className}`}>
+      <ol
+        className="grid list-none gap-[18px] p-0 @2xl:grid-cols-[repeat(var(--cols),minmax(0,1fr))] @2xl:gap-3.5"
+        style={{ '--cols': nodes.length } as CSSProperties}
+      >
+        {nodes.map((node) => (
+          <li
+            key={node.title}
+            className="relative rounded-panel border border-line-2 bg-bg-2 px-4 py-3.5 after:absolute after:z-10 after:text-[16px] after:leading-none after:text-acc-dim last:after:hidden @max-2xl:after:-bottom-[17px] @max-2xl:after:left-1/2 @max-2xl:after:-translate-x-1/2 @max-2xl:after:content-['↓'] @2xl:p-5 @2xl:after:-right-[14px] @2xl:after:top-1/2 @2xl:after:-translate-y-1/2 @2xl:after:text-[18px] @2xl:after:content-['→']"
+          >
+            <div className="flex flex-wrap items-baseline gap-x-3 @2xl:block">
+              <div className="font-mono text-[9.5px] uppercase tracking-[0.2em] text-acc @2xl:mb-2">{node.label}</div>
+              <b className="block text-[15px] font-[650] text-title @2xl:mb-1.5 @2xl:text-[15.5px]">{node.title}</b>
+            </div>
+            <p className="m-0 mt-1 text-[13px] text-text-2 @2xl:mt-0">{node.body}</p>
+          </li>
+        ))}
+      </ol>
+    </div>
   );
 }

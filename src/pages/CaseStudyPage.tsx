@@ -1,6 +1,6 @@
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { projects } from '../data/projects';
-import { caseMoves, casePipelines, numeraHolding, tickerSymbol } from '../data/holdings';
+import { caseMoves, holdings, numeraCore } from '../data/holdings';
 import { ScrollReveal } from '../components/effects/ScrollReveal';
 import { SlateHeader } from '../components/ui/SlateHeader';
 import { Movelist } from '../components/ui/Movelist';
@@ -20,8 +20,7 @@ export function CaseStudyPage() {
   if (!project) return <Navigate to="/404" replace />;
 
   const { caseStudy: cs } = project;
-  const symbol = tickerSymbol[project.slug] ?? 'CASE';
-  const pipeline = casePipelines[project.slug];
+  const holding = holdings.find((h) => h.slug === project.slug);
   const moves = caseMoves[project.slug];
   const others = projects.filter((p) => p.slug !== project.slug);
 
@@ -46,11 +45,11 @@ export function CaseStudyPage() {
               Holdings
             </Link>
             <span aria-hidden="true">/</span>
-            <span className="text-acc">{symbol}</span>
+            <span className="text-acc">{project.title}</span>
           </nav>
 
           <ScrollReveal>
-            <SlateHeader sc={`SC 02 · ${symbol} · ${project.title}`} take={`${cs.meta.role} · ${cs.meta.timeline}`} />
+            <SlateHeader sc={`SC 02 · ${project.title}`} take={`${cs.meta.role} · ${cs.meta.timeline}`} />
           </ScrollReveal>
 
           <ScrollReveal delay={0.05}>
@@ -94,26 +93,23 @@ export function CaseStudyPage() {
       </header>
 
       {/* Architecture */}
-      <section className="border-b border-line-2 bg-bg-2 py-14" aria-label="Architecture">
-        <div className={wrap}>
-          <div className={`${tapeline} mb-2`}>
-            <span>Architecture · data flow</span>
-            <span>{symbol}</span>
+      {holding && (
+        <section className="border-b border-line-2 bg-bg-2 py-14" aria-label="How it works">
+          <div className={wrap}>
+            <div className={`${tapeline} mb-2`}>
+              <span>How it works</span>
+              <span>{project.title}</span>
+            </div>
+            <ScrollReveal>
+              {holding.diagram.kind === 'hex' ? (
+                <HexCoreDiagram {...numeraCore} />
+              ) : (
+                <RelayDiagram nodes={holding.diagram.nodes} className="mt-6" />
+              )}
+            </ScrollReveal>
           </div>
-          <ScrollReveal>
-            {project.slug === numeraHolding.slug ? (
-              <HexCoreDiagram
-                portA={numeraHolding.portA}
-                core={numeraHolding.core}
-                portB={numeraHolding.portB}
-                seam={numeraHolding.seam}
-              />
-            ) : (
-              pipeline && <RelayDiagram nodes={pipeline} className="mt-6" />
-            )}
-          </ScrollReveal>
-        </div>
-      </section>
+        </section>
+      )}
 
       {/* Body */}
       <div className="mx-auto max-w-[860px] px-7 py-[84px] max-[700px]:px-5">
@@ -128,7 +124,7 @@ export function CaseStudyPage() {
               <section className="mb-[72px]">
                 <div className={`${tapeline} mb-3.5`}>
                   <span>
-                    {symbol}.{num} · {title}
+                    {num} · {title}
                   </span>
                 </div>
                 <h2 className={h3}>{section.heading}</h2>
@@ -197,7 +193,7 @@ export function CaseStudyPage() {
           <BookStrip
             className="mt-8"
             items={others.map((p) => ({
-              kicker: `${tickerSymbol[p.slug] ?? 'CASE'} · ${p.statusLabel}`,
+              kicker: p.statusLabel,
               title: p.title,
               body: p.outcome,
               href: `/projects/${p.slug}`,

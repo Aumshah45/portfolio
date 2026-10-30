@@ -5,7 +5,7 @@ export const credentials: CredentialCategory[] = [
     category: 'Experience',
     items: [
       {
-        title: 'Associate Analyst Developer',
+        title: 'Associate Analyst Development',
         subtitle: 'Sun Life Global Solutions',
         date: 'Aug 2025 \u2014 Present',
       },
