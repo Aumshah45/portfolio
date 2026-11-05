@@ -114,6 +114,24 @@ export const holdings: Holding[] = [
       ],
     },
   },
+  {
+    slug: 'shield',
+    category: 'Personal investing automation · private',
+    headline: { value: 'Daily', unit: 'unattended', label: 'one run a day, unattended, with a heartbeat every few days so silence never hides a failure' },
+    built:
+      'A scheduled Python job that pulls market data from a broker API, evaluates a private set of rules and messages me on Telegram only when there is something to act on.',
+    keyDecision:
+      'Make silence the normal state, then add a heartbeat every few days, so a quiet bot always means nothing to act on and never means it stopped running.',
+    diagram: {
+      kind: 'relay',
+      nodes: [
+        { label: 'Step 1', title: 'Schedule', body: 'A daily run that catches up any missed day' },
+        { label: 'Step 2', title: 'Fetch', body: 'Market data from the broker API, transient errors retried' },
+        { label: 'Step 3', title: 'Evaluate', body: 'The private rules. Sealed.' },
+        { label: 'Step 4', title: 'Notify', body: 'Telegram only when a rule fires, plus a heartbeat' },
+      ],
+    },
+  },
 ];
 
 /** Annotated decisions shown on each case-study page. */
@@ -138,5 +156,11 @@ export const caseMoves: Record<string, Move[]> = {
     { no: '1.', text: 'One owner for every workflow callback', glyph: '!', note: 'the queue reports startup failures; child workflows report completion' },
     { no: '2.', text: 'Budget the time left in synchronous bundles', glyph: '!', note: 'a controlled timeout and an async path, never a half-deleted temp file' },
     { no: '3.', text: 'Pass S3 references, not documents', glyph: '!', note: 'streamed HTML and presigned uploads keep large payloads off the wire' },
+  ],
+  shield: [
+    { no: '1.', text: 'Alert only when a rule fires', glyph: '!', note: 'a bot that speaks daily gets ignored' },
+    { no: '2.', text: 'A heartbeat every few days', glyph: '!!', note: 'silence can never hide a failure' },
+    { no: '3.', text: 'Catch up a missed run, never alert twice', glyph: '!', note: 'a missed day is replayed, not duplicated' },
+    { no: '4.', text: 'Publish the plumbing, seal the rules', glyph: '!?', note: 'the page shows how it runs, never what it looks for' },
   ],
 };

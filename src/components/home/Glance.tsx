@@ -1,5 +1,6 @@
 import { useEffect, useRef } from 'react';
-import type { CSSProperties } from 'react';
+import type { CSSProperties, MouseEvent } from 'react';
+import { Link, useNavigate } from 'react-router-dom';
 import { editions, highlights } from '../../data/editions';
 
 const d = (n: number) => ({ '--d': n }) as CSSProperties;
@@ -35,10 +36,12 @@ function Count({ to }: { to: number }) {
 }
 
 /** The professional signal in one screen: four figures, then every edition in one table. */
-export function Glance({ onPick }: { onPick: (i: number) => void }) {
-  const pick = (i: number) => {
-    onPick(i);
-    document.getElementById('top')?.scrollIntoView({ behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth' });
+export function Glance() {
+  const navigate = useNavigate();
+  // The whole row is a target for the pointer; the title link carries keyboard and screen-reader users.
+  const open = (ev: MouseEvent, slug: string) => {
+    if ((ev.target as HTMLElement).closest('a') || window.getSelection()?.toString()) return;
+    navigate(`/projects/${slug}`);
   };
 
   return (
@@ -49,7 +52,7 @@ export function Glance({ onPick }: { onPick: (i: number) => void }) {
             At a glance
           </h2>
           <p data-reveal style={d(1)}>
-            Every figure here is measured or counted, never projected. Choose a row to pull that edition from the shelf.
+            Every figure here is measured or counted, never projected. Choose a row to open its case study.
           </p>
         </div>
 
@@ -83,23 +86,14 @@ export function Glance({ onPick }: { onPick: (i: number) => void }) {
             </tr>
           </thead>
           <tbody>
-            {editions.map((e, i) => (
-              <tr
-                key={e.no}
-                tabIndex={0}
-                onClick={() => pick(i)}
-                onKeyDown={(ev) => {
-                  if (ev.key === 'Enter' || ev.key === ' ') {
-                    ev.preventDefault();
-                    pick(i);
-                  }
-                }}
-                aria-label={`Pull No. ${e.no}, ${e.title}, from the shelf`}
-              >
+            {editions.map((e) => (
+              <tr key={e.no} onClick={(ev) => open(ev, e.slug)}>
                 <td className="index__no num">{e.no}</td>
                 <th scope="row">
                   <span className={`index__swatch spine--${e.variant}`} aria-hidden="true" />
-                  {e.title}
+                  <Link to={`/projects/${e.slug}`} className="index__link">
+                    {e.title}
+                  </Link>
                 </th>
                 <td className="index__what">{e.what}</td>
                 <td className="index__kpi num">

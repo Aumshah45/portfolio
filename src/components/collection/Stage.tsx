@@ -154,13 +154,9 @@ export function Stage({ selected, onSelect }: { selected: number; onSelect: (i: 
                 </div>
               ))}
             </dl>
-            {e.slug ? (
-              <Link className="edition__open" to={`/projects/${e.slug}`}>
-                Open the edition
-              </Link>
-            ) : (
-              <p className="edition__sealed">Private screening. No edition notes.</p>
-            )}
+            <Link className="edition__open" to={`/projects/${e.slug}`}>
+              Open the edition
+            </Link>
           </div>
 
           <div className="rotate">

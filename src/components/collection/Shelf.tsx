@@ -55,14 +55,10 @@ export function Shelf({ selected, onSelect, exclude, label, hint }: Props) {
           >
             <SpineFace e={e} />
           </button>
-        ) : e.slug ? (
+        ) : (
           <Link key={e.no} to={`/projects/${e.slug}`} className={`spine spine--${e.variant}`} style={spineStyle(e, i)} aria-label={`No. ${e.no}, ${e.title}`}>
             <SpineFace e={e} />
           </Link>
-        ) : (
-          <span key={e.no} className={`spine spine--${e.variant} spine--sealed`} style={spineStyle(e, i)} aria-label={`No. ${e.no}, ${e.title}, private`}>
-            <SpineFace e={e} />
-          </span>
         ),
       )}
     </div>

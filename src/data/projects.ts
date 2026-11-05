@@ -369,4 +369,70 @@ export const projects: Project[] = [
         'A working monitor for a dependency nobody watches: probes that behave like agents, a judge whose cost is engineered down, and scoring that stays replayable because it is pure.',
     },
   },
+  {
+    title: 'Shield',
+    slug: 'shield',
+    status: 'live',
+    statusLabel: 'Private',
+    problem:
+      'A rules-based investing approach only works if the rules are checked against fresh data every day, without fail, and nobody is interrupted when nothing has changed.',
+    outcome:
+      'A personal system that runs unattended: a daily job evaluates a private set of rules and messages me on Telegram only when there is something to act on.',
+    metrics: [
+      { value: 'Daily', label: 'Unattended Run' },
+      { value: 'Sealed', label: 'Rules' },
+    ],
+    techTags: ['Python', 'Broker API', 'Telegram'],
+    visualType: 'flow',
+    caseStudy: {
+      heroTitle: 'A personal investing system that stays quiet until it matters',
+      heroSubtitle:
+        'How I built a daily job that checks a private set of rules, alerts only when one fires, and proves it is still alive when it has nothing to say. The plumbing is on this page; the strategy is not.',
+      meta: { role: 'Design & solo build', company: 'Personal', timeline: 'Ongoing' },
+      sections: [
+        {
+          label: '01 — The Problem',
+          heading: 'Check every day, interrupt only when it counts',
+          paragraphs: [
+            'Rules are only useful if they are applied every trading day, against fresh market data, the same way each time. Doing that by hand means either watching constantly or missing the day it mattered.',
+            'The opposite failure is noise: a bot that messages every day trains you to ignore it. The system had to be silent by default, and that silence had to be trustworthy.',
+          ],
+        },
+        {
+          label: '02 — The Approach',
+          heading: 'A daily job, a private rulebook, one channel',
+          paragraphs: [
+            'A scheduled Python job pulls market data from the broker’s API, evaluates a private set of rules, and sends a Telegram message only when one of them fires. Most days it sends nothing, by design.',
+            'Because silence is the normal state, a separate heartbeat reports every few days. A quiet bot then means “nothing to act on”, never “it crashed on Tuesday”.',
+          ],
+        },
+        {
+          label: '03 — Tech Stack',
+          heading: 'Small, boring and hard to break',
+          paragraphs: [
+            'Transient API errors are retried rather than ending the run, and data is written atomically, so a crash part-way through cannot leave a half-written file for the next day to read. If a run is missed, the next one catches it up without sending the same alert twice.',
+          ],
+        },
+        {
+          label: '04 — Results',
+          heading: 'Runs unattended, and stays sealed',
+          paragraphs: [
+            'It runs every day without me opening it. What stays private is everything that would describe the strategy: the screening rules, what they look at and when they fire. The redacted cover is not decoration.',
+          ],
+        },
+      ],
+      techStack: [
+        { name: 'Python', color: 'blue' },
+        { name: 'Broker market-data API', color: 'green' },
+        { name: 'Telegram Bot API', color: 'blue' },
+      ],
+      resultMetrics: [
+        { value: 'Daily', label: 'Unattended Run' },
+        { value: 'Telegram', label: 'Alert Channel' },
+        { value: 'Sealed', label: 'Rules' },
+      ],
+      resultSummary:
+        'A system I can trust by its silence: it checks every day, speaks only when a rule fires, checks in when it has not spoken for a while, and keeps the rules to itself.',
+    },
+  },
 ];

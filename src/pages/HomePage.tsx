@@ -23,7 +23,7 @@ export function HomePage() {
   return (
     <>
       <Stage selected={selected} onSelect={setSelected} />
-      <Glance onPick={setSelected} />
+      <Glance />
       <Press />
       <LinerNotes />
       <RiskFactors />

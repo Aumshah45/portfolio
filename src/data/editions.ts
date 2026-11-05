@@ -7,8 +7,8 @@ export type CoverVariant = 'metrics' | 'agents' | 'pages' | 'hex' | 'orbit' | 's
 
 export interface Edition {
   no: string;
-  /** Case-study route; Shield has none, its notes stay private. */
-  slug?: string;
+  /** Case-study route, /projects/{slug}. */
+  slug: string;
   variant: CoverVariant;
   title: string;
   spine: string;
@@ -144,6 +144,7 @@ export const editions: Edition[] = [
   },
   {
     no: '006',
+    slug: 'shield',
     variant: 'sealed',
     title: 'Shield',
     spine: 'Shield',
