@@ -1,8 +1,5 @@
 import type { CSSProperties } from 'react';
-import { appreciationClips, featureClip } from '../../data/reel';
-
-const praise = appreciationClips.find((c) => c.headline === 'Faster Together');
-const firstSentence = (q = '') => q.match(/^.+?[.!?](?=\s|$)/)?.[0] ?? q;
+import { featureClip } from '../../data/reel';
 
 /** About, as a short signed letter, beside the recognition it earned. */
 export function LinerNotes() {
@@ -17,12 +14,10 @@ export function LinerNotes() {
             <b>
               {featureClip.headline}, {featureClip.timecode.replace(' · ', ' ')}
             </b>
-            {praise?.quote && <blockquote>“{firstSentence(praise.quote)}”</blockquote>}
-            {praise && (
-              <figcaption>
-                {praise.from}, {praise.role}
-              </figcaption>
-            )}
+            <blockquote>{featureClip.quote}</blockquote>
+            <figcaption>
+              {featureClip.role}, {featureClip.from}
+            </figcaption>
             <a className="link" href={featureClip.documentUrl} target="_blank" rel="noopener noreferrer">
               View the certificate (PDF)
             </a>

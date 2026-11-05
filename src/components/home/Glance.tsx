@@ -55,7 +55,7 @@ export function Glance({ onPick }: { onPick: (i: number) => void }) {
 
         <dl className="highlights" aria-label="Highlights">
           {highlights.map((h, i) => (
-            <div key={h.label} data-reveal style={d(i)}>
+            <div key={h.label} data-reveal style={{ '--d': i, '--accent': `var(--c-${h.variant})` } as CSSProperties}>
               <dt>{h.label}</dt>
               <dd className="num">
                 {h.count !== null && <Count to={h.count} />}

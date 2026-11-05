@@ -2,6 +2,7 @@ import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
 import { Stage } from '../components/collection/Stage';
 import { Glance } from '../components/home/Glance';
+import { Press } from '../components/home/Press';
 import { LinerNotes } from '../components/home/LinerNotes';
 import { RiskFactors } from '../components/home/RiskFactors';
 import { Commentary } from '../components/home/Commentary';
@@ -23,6 +24,7 @@ export function HomePage() {
     <>
       <Stage selected={selected} onSelect={setSelected} />
       <Glance onPick={setSelected} />
+      <Press />
       <LinerNotes />
       <RiskFactors />
       <Commentary />

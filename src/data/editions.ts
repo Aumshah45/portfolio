@@ -169,9 +169,9 @@ export const editions: Edition[] = [
 export const editionBySlug = (slug: string) => editions.find((e) => e.slug === slug);
 
 /** The four figures at a glance, each one measured. */
-export const highlights = [
-  { count: 30, after: '+', small: '', label: 'engineering squads report Copilot savings on a platform I built solo' },
-  { count: 3, after: '-4', small: 'days', label: 'days per routine claim review, down from 15, with three agents in production' },
-  { count: 60, after: '', small: '', label: "tests behind Numera's exact money math, over HTTP and MCP" },
-  { count: null, after: 'Q2', small: '2025', label: 'Employee of the Quarter, Sun Life Global Solutions' },
+export const highlights: { count: number | null; after: string; small: string; label: string; variant: CoverVariant }[] = [
+  { count: 30, after: '+', small: '', label: 'engineering squads report Copilot savings on a platform I built solo', variant: 'metrics' },
+  { count: 3, after: '-4', small: 'days', label: 'days per routine claim review, down from 15, with three agents in production', variant: 'agents' },
+  { count: 60, after: '', small: '', label: "tests behind Numera's exact money math, over HTTP and MCP", variant: 'hex' },
+  { count: null, after: 'Q2', small: '2025', label: 'Employee of the Quarter, Sun Life Global Solutions', variant: 'pages' },
 ];

@@ -73,7 +73,7 @@ export function CaseStudyPage() {
   const figures = cs.resultMetrics.filter((m) => m.value !== holding?.headline.value);
 
   return (
-    <article aria-labelledby={titleId} className="ed">
+    <article aria-labelledby={titleId} className="ed" style={{ '--edc': `var(--c-${edition.variant})` } as CSSProperties}>
       <header className="wrap ed-head">
         <nav aria-label="Breadcrumb">
           <ol className="crumbs">
