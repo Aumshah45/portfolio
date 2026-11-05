@@ -4,19 +4,19 @@ export type Theme = 'light' | 'dark';
 
 const STORAGE_KEY = 'replay-theme';
 
-/** Stored choice wins; otherwise follow the OS. Not persisted until the visitor picks. */
+/** Stored choice wins; otherwise the light theme, which is the primary one. Not persisted until the visitor picks. */
 export function resolveInitialTheme(): Theme {
   try {
     const stored = localStorage.getItem(STORAGE_KEY);
     if (stored === 'light' || stored === 'dark') return stored;
   } catch {
-    // storage blocked (private mode, sandbox) — fall through to OS preference
+    // storage blocked (private mode, sandbox), so fall back to light
   }
-  return window.matchMedia('(prefers-color-scheme: light)').matches ? 'light' : 'dark';
+  return 'light';
 }
 
 function readTheme(): Theme {
-  return document.documentElement.getAttribute('data-theme') === 'light' ? 'light' : 'dark';
+  return document.documentElement.getAttribute('data-theme') === 'dark' ? 'dark' : 'light';
 }
 
 // The <html> attribute is the single source of truth, so every component
@@ -28,7 +28,7 @@ function subscribe(onChange: () => void) {
 }
 
 export function useTheme() {
-  const theme = useSyncExternalStore(subscribe, readTheme, () => 'dark' as Theme);
+  const theme = useSyncExternalStore(subscribe, readTheme, () => 'light' as Theme);
 
   const toggle = useCallback(() => {
     const next: Theme = readTheme() === 'dark' ? 'light' : 'dark';

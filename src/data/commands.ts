@@ -1,19 +1,19 @@
 import type { Command } from '../types';
 
 export const commands: Command[] = [
-  // Scenes, in playhead order
-  { id: 'top', icon: '01', title: 'SC01 · Market open', description: 'Back to the top', action: 'scroll', target: 'top' },
-  { id: 'work', icon: '02', title: 'SC02 · Holdings', description: 'Case studies: Copilot, claims agents, Numera, AgentWatch, documents', action: 'scroll', target: 'work' },
-  { id: 'honest', icon: '03', title: 'SC03 · Intermission', description: 'Five questions, answered straight', action: 'scroll', target: 'honest' },
-  { id: 'about', icon: '04', title: 'SC04 · The player', description: 'Letter, credentials, career scoresheet', action: 'scroll', target: 'about' },
-  { id: 'recognition', icon: '05', title: 'SC05 · The reel', description: 'Awards & recognitions', action: 'scroll', target: 'recognition' },
-  { id: 'contact', icon: '06', title: 'SC06 · Credits', description: 'The stack, and how to get in touch', action: 'scroll', target: 'contact' },
+  // Sections, in page order
+  { id: 'top', icon: '', title: 'The collection', description: 'AUM, as in Asset Under Management', action: 'scroll', target: 'top' },
+  { id: 'work', icon: '', title: 'At a glance', description: 'Four figures and every edition in one table', action: 'scroll', target: 'work' },
+  { id: 'about', icon: '', title: 'Liner notes', description: 'About me, and the recognition', action: 'scroll', target: 'about' },
+  { id: 'risks', icon: '', title: 'Risk factors', description: 'The honest version, before you ask', action: 'scroll', target: 'risks' },
+  { id: 'questions', icon: '', title: 'Commentary track', description: 'Questions from a first call, answered', action: 'scroll', target: 'questions' },
+  { id: 'contact', icon: '', title: 'Contact', description: 'Edition 007 could be yours', action: 'scroll', target: 'contact' },
 
   // Actions
-  { id: 'resume', icon: '↓', title: 'Download prospectus', description: 'Résumé PDF, latest version', action: 'download', target: '/Aum_Shah_Resume.pdf' },
-  { id: 'theme', icon: '◐', title: 'Switch showing', description: 'Late show (dark) / Matinée (light)', action: 'theme', target: '' },
+  { id: 'resume', icon: '', title: 'Download résumé', description: 'PDF, latest version', action: 'download', target: '/Aum_Shah_Resume.pdf' },
+  { id: 'theme', icon: '', title: 'Switch theme', description: 'Light or dark', action: 'theme', target: '' },
 
   // External
-  { id: 'github', icon: '</>', title: 'GitHub', description: 'View my code', action: 'external', target: 'https://github.com/Aumshah45' },
-  { id: 'linkedin', icon: 'in', title: 'LinkedIn', description: 'Connect with me', action: 'external', target: 'https://www.linkedin.com/in/aum-shah-34a3871ba' },
+  { id: 'github', icon: '', title: 'GitHub', description: 'View my code', action: 'external', target: 'https://github.com/Aumshah45' },
+  { id: 'linkedin', icon: '', title: 'LinkedIn', description: 'Connect with me', action: 'external', target: 'https://www.linkedin.com/in/aum-shah-34a3871ba' },
 ];

@@ -1,16 +1,17 @@
-import { useEffect } from 'react';
+import { useEffect, useState } from 'react';
 import { useLocation } from 'react-router-dom';
-import { Hero } from '../components/hero/Hero';
-import { HoldingsSection } from '../components/holdings/HoldingsSection';
-import { IntermissionSection } from '../components/intermission/IntermissionSection';
-import { PlayerSection } from '../components/player/PlayerSection';
-import { ReelSection } from '../components/reel/ReelSection';
-import { CreditsSection } from '../components/credits/CreditsSection';
+import { Stage } from '../components/collection/Stage';
+import { Glance } from '../components/home/Glance';
+import { LinerNotes } from '../components/home/LinerNotes';
+import { RiskFactors } from '../components/home/RiskFactors';
+import { Commentary } from '../components/home/Commentary';
+import { Close } from '../components/home/Close';
 
 export function HomePage() {
   const { hash, key } = useLocation();
+  const [selected, setSelected] = useState(0);
 
-  // Scene links arrive as /#id, including from case-study pages.
+  // Section links arrive as /#id, including from edition pages.
   useEffect(() => {
     if (!hash) return;
     const id = decodeURIComponent(hash.slice(1));
@@ -20,12 +21,12 @@ export function HomePage() {
 
   return (
     <>
-      <Hero />
-      <HoldingsSection />
-      <IntermissionSection />
-      <PlayerSection />
-      <ReelSection />
-      <CreditsSection />
+      <Stage selected={selected} onSelect={setSelected} />
+      <Glance onPick={setSelected} />
+      <LinerNotes />
+      <RiskFactors />
+      <Commentary />
+      <Close />
     </>
   );
 }

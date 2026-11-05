@@ -3,14 +3,12 @@ import { useEffect, useState, useCallback, lazy, Suspense } from 'react';
 import { AnimatePresence, motion } from 'framer-motion';
 import { Navbar } from './components/layout/Navbar';
 import { Footer } from './components/layout/Footer';
-import { Playhead } from './components/layout/Playhead';
-import { TickerTape } from './components/cinema/TickerTape';
-import { Scanlines } from './components/cinema/Scanlines';
 import { ColdOpenProvider } from './components/cinema/ColdOpenProvider';
 import { CommandPalette } from './components/command-palette/CommandPalette';
 import { ContactModal } from './components/contact/ContactModal';
 import { useCommandPalette } from './hooks/useCommandPalette';
 import { useConsoleGreeting } from './hooks/useConsoleGreeting';
+import { useReveal } from './hooks/useReveal';
 import { HomePage } from './pages/HomePage';
 
 // Code-split heavier routes — only loaded when visited
@@ -19,8 +17,8 @@ const NotFoundPage = lazy(() => import('./pages/NotFoundPage').then((m) => ({ de
 
 function RouteFallback() {
   return (
-    <div className="flex min-h-[60vh] items-center justify-center">
-      <span className="animate-pulse font-mono text-[11px] uppercase tracking-[0.22em] text-acc-dim">loading reel…</span>
+    <div className="loading" role="status">
+      Loading the reel…
     </div>
   );
 }
@@ -39,7 +37,8 @@ function AnimatedRoutes() {
 
   return (
     <AnimatePresence mode="wait">
-      <motion.div
+      <motion.main
+        id="main"
         key={location.pathname}
         initial={{ opacity: 0, y: 12 }}
         animate={{ opacity: 1, y: 0 }}
@@ -53,7 +52,7 @@ function AnimatedRoutes() {
             <Route path="*" element={<NotFoundPage />} />
           </Routes>
         </Suspense>
-      </motion.div>
+      </motion.main>
     </AnimatePresence>
   );
 }
@@ -64,6 +63,7 @@ export default function App() {
   const openContact = useCallback(() => setContactOpen(true), []);
   const closeContact = useCallback(() => setContactOpen(false), []);
   useConsoleGreeting();
+  useReveal();
 
   useEffect(() => {
     const handler = () => setContactOpen(true);
@@ -74,21 +74,13 @@ export default function App() {
   return (
     <BrowserRouter>
       <ScrollToTop />
-      <a
-        href="#main"
-        className="sr-only no-underline focus:not-sr-only focus:fixed focus:left-3 focus:top-3 focus:z-[200] focus:rounded-panel focus:bg-acc focus:px-4 focus:py-2 focus:font-mono focus:text-[12px] focus:uppercase focus:tracking-[0.18em] focus:text-acc-contrast"
-      >
+      <a href="#main" className="skip">
         Skip to content
       </a>
       <ColdOpenProvider>
-        <Scanlines />
         <Navbar onCommandPalette={open} onContact={openContact} />
-        <TickerTape />
-        <main id="main">
-          <AnimatedRoutes />
-        </main>
-        <Footer />
-        <Playhead />
+        <AnimatedRoutes />
+        <Footer onCommandPalette={open} />
         <CommandPalette isOpen={isOpen} onClose={close} />
         <ContactModal isOpen={contactOpen} onClose={closeContact} />
       </ColdOpenProvider>

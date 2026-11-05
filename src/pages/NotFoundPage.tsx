@@ -1,28 +1,19 @@
-import { SlateHeader } from '../components/ui/SlateHeader';
-import { ReplayButton } from '../components/ui/ReplayButton';
-import { Movelist } from '../components/ui/Movelist';
-import { wrap } from '../components/ui/styles';
+import { Link } from 'react-router-dom';
+import { Shelf } from '../components/collection/Shelf';
 
 export function NotFoundPage() {
   return (
-    <section className="flex min-h-[78vh] items-center py-20">
-      <div className={`${wrap} w-full`}>
-        <div className="max-w-[720px]">
-          <SlateHeader sc="SC ?? · Missing reel" take="error 404" />
-          <h1 className="m-0 mb-6 text-balance text-[clamp(44px,8vw,96px)] font-extrabold leading-[0.98] tracking-[-0.03em] text-title stretch-112">
-            This reel <span className="text-acc [text-shadow:var(--glow)]">isn&rsquo;t in the can.</span>
-          </h1>
-          <p className="m-0 mb-2 max-w-[56ch] text-[17px] text-text-2">
-            That URL doesn&rsquo;t lead anywhere on this site. Maybe a stale link, a typo, or a project I haven&rsquo;t shipped yet.
-          </p>
-          <Movelist moves={[{ no: '?', text: 'Wrong turn', glyph: '??', note: 'recoverable; the position is fine' }]} className="mb-8 mt-6" />
-          <div className="flex flex-wrap gap-3">
-            <ReplayButton to="/">Back to the top</ReplayButton>
-            <ReplayButton variant="ghost" to="/#work">
-              Open the holdings
-            </ReplayButton>
-          </div>
+    <section className="missing" aria-labelledby="missing-title">
+      <div className="wrap">
+        <p className="edition__no">No edition at this address</p>
+        <h1 id="missing-title">This edition is out of print.</h1>
+        <p className="missing__lede">A stale link, a typo, or something not yet released. Everything that is out is on the shelf below.</p>
+        <div className="actions">
+          <Link className="btn btn--ink" to="/#top">
+            Back to the collection
+          </Link>
         </div>
+        <Shelf />
       </div>
     </section>
   );

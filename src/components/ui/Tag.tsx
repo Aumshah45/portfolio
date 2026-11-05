@@ -1,19 +1,15 @@
-import type { ReactNode } from 'react';
-
 interface Props {
-  children: ReactNode;
-  /** Gold is reserved for awards. */
-  gold?: boolean;
+  items: string[];
+  label: string;
 }
 
-export function Tag({ children, gold }: Props) {
+/** A plain list of names (a stack, the tools): no boxes, no capitals. */
+export function Tag({ items, label }: Props) {
   return (
-    <span
-      className={`inline-block rounded-panel border px-3 py-1.5 font-mono text-[10.5px] uppercase tracking-[0.14em] ${
-        gold ? 'border-gold-line text-gold' : 'border-line-2 text-text-2'
-      }`}
-    >
-      {children}
-    </span>
+    <ul className="tags" aria-label={label}>
+      {items.map((t) => (
+        <li key={t}>{t}</li>
+      ))}
+    </ul>
   );
 }

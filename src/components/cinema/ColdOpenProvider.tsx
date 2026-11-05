@@ -7,11 +7,11 @@ import { ColdOpenContext } from './coldOpenContext';
 import { projects } from '../../data/projects';
 
 function sceneFor(pathname: string): string {
-  if (pathname === '/') return '01 · Market open';
+  if (pathname === '/') return 'Market open';
   const slug = pathname.match(/^\/projects\/([^/]+)/)?.[1];
   const project = slug ? projects.find((p) => p.slug === slug) : undefined;
-  if (project) return `02 · ${project.title}`;
-  return '?? · Missing reel';
+  if (project) return project.title;
+  return 'Missing reel';
 }
 
 /**

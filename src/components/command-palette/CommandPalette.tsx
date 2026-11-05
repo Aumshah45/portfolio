@@ -8,8 +8,6 @@ interface Props {
   onClose: () => void;
 }
 
-const kbd = 'rounded border border-line-2 bg-bg-3 px-1 font-mono text-[10px]';
-
 export function CommandPalette({ isOpen, onClose }: Props) {
   return (
     <AnimatePresence>
@@ -19,7 +17,7 @@ export function CommandPalette({ isOpen, onClose }: Props) {
           animate={{ opacity: 1 }}
           exit={{ opacity: 0 }}
           transition={{ duration: 0.15 }}
-          className="fixed inset-0 z-[1000] flex items-start justify-center bg-[rgba(4,10,7,0.6)] pt-[20vh] backdrop-blur-sm"
+          className="overlay overlay--top"
           onClick={(e) => e.target === e.currentTarget && onClose()}
         >
           <PaletteBody onClose={onClose} />
@@ -83,58 +81,42 @@ function PaletteBody({ onClose }: { onClose: () => void }) {
       role="dialog"
       aria-modal="true"
       aria-label="Command palette"
-      initial={{ opacity: 0, scale: 0.97, y: -10 }}
-      animate={{ opacity: 1, scale: 1, y: 0 }}
-      exit={{ opacity: 0, scale: 0.97, y: -10 }}
+      initial={{ opacity: 0, y: -8 }}
+      animate={{ opacity: 1, y: 0 }}
+      exit={{ opacity: 0, y: -8 }}
       transition={{ duration: 0.2, ease: [0.16, 1, 0.3, 1] }}
-      className="w-[520px] max-w-[90vw] overflow-hidden rounded-panel border border-line bg-bg-2 shadow-[0_30px_80px_-20px_rgba(0,0,0,0.6)]"
+      className="sheet"
       onKeyDown={handleKeyDown}
     >
-      <div className="flex items-center gap-3 border-b border-line-2 px-4 py-3.5">
-        <span className="font-mono text-[12px] text-acc" aria-hidden="true">
-          &gt;
-        </span>
-        <input
-          autoFocus
-          value={query}
-          onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
-          placeholder="Jump to a scene or run a command"
-          aria-label="Search commands"
-          className="flex-1 border-none bg-transparent font-mono text-[14px] text-title outline-none placeholder:text-acc-dim"
-        />
-      </div>
-      <div className="max-h-[320px] overflow-y-auto p-2" role="listbox">
-        {filtered.length === 0 && (
-          <p className="m-0 px-3 py-6 text-center font-mono text-[11px] uppercase tracking-[0.18em] text-acc-dim">
-            No scene matches &ldquo;{query}&rdquo;
-          </p>
-        )}
+      <input
+        autoFocus
+        value={query}
+        onChange={(e) => { setQuery(e.target.value); setSelectedIndex(0); }}
+        placeholder="Jump to a section or run a command"
+        aria-label="Search commands"
+        className="palette__input"
+      />
+      <ul className="palette__list" role="listbox" aria-label="Commands">
+        {filtered.length === 0 && <li className="palette__empty">Nothing matches “{query}”. Try a section name, like Work or Notes.</li>}
         {filtered.map((cmd, i) => (
-          <div
+          <li
             key={cmd.id}
             role="option"
             aria-selected={i === selectedIndex}
             onClick={() => execute(cmd.action, cmd.target)}
             onMouseEnter={() => setSelectedIndex(i)}
-            className={`flex cursor-pointer items-center gap-3 rounded-panel border px-3 py-2.5 transition-colors ${
-              i === selectedIndex ? 'border-line bg-tint' : 'border-transparent'
-            }`}
+            className="palette__item"
           >
-            <div className="flex h-8 w-8 flex-none items-center justify-center rounded-panel border border-line-2 bg-bg-3 font-mono text-[11px] text-acc">
-              {cmd.icon}
-            </div>
-            <div className="min-w-0 flex-1">
-              <div className="text-[13px] font-semibold text-title">{cmd.title}</div>
-              <div className="truncate text-[11.5px] text-text-2">{cmd.description}</div>
-            </div>
-          </div>
+            <b>{cmd.title}</b>
+            <span>{cmd.description}</span>
+          </li>
         ))}
-      </div>
-      <div className="flex gap-4 border-t border-line-2 px-4 py-2.5 font-mono text-[10.5px] text-acc-dim">
-        <span><kbd className={kbd}>&uarr;</kbd><kbd className={kbd}>&darr;</kbd> navigate</span>
-        <span><kbd className={kbd}>&crarr;</kbd> select</span>
-        <span><kbd className={kbd}>Esc</kbd> close</span>
-      </div>
+      </ul>
+      <p className="palette__keys">
+        <span>Arrow keys to move</span>
+        <span>Enter to select</span>
+        <span>Esc to close</span>
+      </p>
     </motion.div>
   );
 }

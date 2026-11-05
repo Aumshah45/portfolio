@@ -15,7 +15,7 @@ export const intermission: QA[] = [
   },
   {
     q: 'What did you actually own, versus what was handed to you?',
-    a: 'The Copilot platform was mine end to end: six weeks, solo, schema to deploy. The claims system I architected and built alongside the trainees I mentored. On the document pipeline I owned the AWS orchestration and the component library. *Happy to go line by line on any of them.*',
+    a: 'The Copilot platform was mine end to end: six weeks, solo, schema to deploy. The claims system I architected and built alongside the trainees I mentored. On the document platform I owned the entire backend implementation, built to an architecture someone else designed. *Happy to go line by line on any of them.*',
   },
   {
     q: 'What are you looking for next?',

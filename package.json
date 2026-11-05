@@ -8,7 +8,6 @@
     "prebuild": "node scripts/generate-og.mjs",
     "build": "tsc -b && vite build",
     "og": "node scripts/generate-og.mjs",
-    "stills": "node scripts/generate-stills.mjs",
     "lint": "eslint .",
     "preview": "vite preview"
   },

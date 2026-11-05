@@ -1,206 +1,258 @@
+import { useCallback, useRef, useState } from 'react';
+import type { CSSProperties } from 'react';
 import { useParams, Link, Navigate } from 'react-router-dom';
 import { projects } from '../data/projects';
 import { caseMoves, holdings, numeraCore } from '../data/holdings';
-import { ScrollReveal } from '../components/effects/ScrollReveal';
-import { SlateHeader } from '../components/ui/SlateHeader';
+import { editionBySlug } from '../data/editions';
+import { appreciationClips } from '../data/reel';
+import { span } from '../data/format';
+import { useTilt } from '../hooks/useTilt';
+import { Cover } from '../components/collection/Cover';
+import { Shelf } from '../components/collection/Shelf';
 import { Movelist } from '../components/ui/Movelist';
-import { ReplayButton } from '../components/ui/ReplayButton';
 import { Tag } from '../components/ui/Tag';
 import { RelayDiagram } from '../components/holdings/RelayDiagram';
 import { HexCoreDiagram } from '../components/holdings/HexCoreDiagram';
 import { BeforeAfterPanel } from '../components/holdings/BeforeAfterPanel';
-import { BookStrip } from '../components/holdings/BookStrip';
-import { DecodeNumber } from '../components/holdings/DecodeNumber';
-import { h3, lede, monoLink, tapeline, wrap } from '../components/ui/styles';
+import { Lightbox } from '../components/reel/Lightbox';
+import type { LightboxImage } from '../components/reel/Lightbox';
+
+/** Dashes read as commas on this site. */
+const plain = (s: string) => s.replace(/\s*[—–]\s*/g, ', ');
+
+/** Proper nouns that keep their capital when a Title Case string is set in sentence case. */
+const proper = new Set(['GitHub', 'Copilot', 'Sun', 'Life', 'AWS']);
+
+/** Sentence case: the first word, acronyms and proper nouns keep their capitals; middle dots become commas. */
+const sentence = (s: string) =>
+  plain(s)
+    .replace(/\s+·\s+/g, ', ')
+    .split(' ')
+    .map((w, i) => (i === 0 || proper.has(w) || /[A-Z].*[A-Z]/.test(w) ? w : w.toLowerCase()))
+    .join(' ');
+
+/** Live captures of the two open-source builds, taken from the running products. */
+const screens: Record<string, { src: string; width: number; height: number; alt: string; caption: string }> = {
+  numera: {
+    src: '/shots/numera-docs.png',
+    width: 2000,
+    height: 3000,
+    alt: 'Numera’s live API docs: fourteen endpoints for exposures, quotes, orders, policies, positions, audit and reports, then the schemas',
+    caption: 'The live API docs, captured from the running service.',
+  },
+  agentwatch: {
+    src: '/shots/agentwatch.png',
+    width: 1650,
+    height: 2132,
+    alt: 'The AgentWatch dashboard ranking thirteen public MCP servers by reliability score, uptime and tool-call success',
+    caption: 'The reliability dashboard, ranking thirteen public MCP servers.',
+  },
+};
 
 export function CaseStudyPage() {
   const { slug } = useParams<{ slug: string }>();
   const project = projects.find((p) => p.slug === slug);
+  const edition = slug ? editionBySlug(slug) : undefined;
+  const slot = useRef<HTMLDivElement>(null);
+  const tilt = useRef<HTMLDivElement>(null);
+  const [lightbox, setLightbox] = useState<LightboxImage | null>(null);
+  const closeLightbox = useCallback(() => setLightbox(null), []);
+  useTilt(slot, tilt, 8);
 
-  if (!project) return <Navigate to="/404" replace />;
+  if (!project || !edition) return <Navigate to="/404" replace />;
 
   const { caseStudy: cs } = project;
   const holding = holdings.find((h) => h.slug === project.slug);
   const moves = caseMoves[project.slug];
-  const others = projects.filter((p) => p.slug !== project.slug);
-
-  const meta = [
-    { label: 'Role', value: cs.meta.role },
-    { label: 'Company', value: cs.meta.company },
-    { label: 'Timeline', value: cs.meta.timeline },
-    { label: 'Status', value: project.statusLabel, live: project.status === 'live' },
-  ];
+  const screen = screens[project.slug];
+  const reviews = project.slug === 'copilot-metrics' ? appreciationClips : [];
+  const titleId = `ed-${project.slug}`;
+  const isTech = (label: string) => label.toLowerCase().includes('tech');
+  const chapters = cs.sections.filter((section) => !isTech(section.label));
+  const techParagraphs = cs.sections.find((section) => isTech(section.label))?.paragraphs ?? [];
+  const figures = cs.resultMetrics.filter((m) => m.value !== holding?.headline.value);
 
   return (
-    <article>
-      {/* Header */}
-      <header className="border-b border-line-2 pb-16 pt-12">
-        <div className={wrap}>
-          <nav aria-label="Breadcrumb" className={`${tapeline} mb-8 justify-start gap-x-2`}>
-            <Link to="/" className="text-acc-dim no-underline hover:text-acc">
-              Master tape
-            </Link>
-            <span aria-hidden="true">/</span>
-            <Link to="/#work" className="text-acc-dim no-underline hover:text-acc">
-              Holdings
-            </Link>
-            <span aria-hidden="true">/</span>
-            <span className="text-acc">{project.title}</span>
-          </nav>
+    <article aria-labelledby={titleId} className="ed">
+      <header className="wrap ed-head">
+        <nav aria-label="Breadcrumb">
+          <ol className="crumbs">
+            <li>
+              <Link to="/#top" className="link">
+                The collection
+              </Link>
+            </li>
+            <li aria-current="page">No. {edition.no}</li>
+          </ol>
+        </nav>
 
-          <ScrollReveal>
-            <SlateHeader sc={`SC 02 · ${project.title}`} take={`${cs.meta.role} · ${cs.meta.timeline}`} />
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.05}>
-            <h1 className="m-0 mb-5 max-w-[24ch] text-balance text-[clamp(34px,5vw,64px)] font-extrabold leading-[1.02] tracking-[-0.03em] text-title stretch-110">
-              {cs.heroTitle}
+        <div className="ed-head__grid">
+          <div className="cover-slot cover-slot--edition enter" ref={slot}>
+            <div className="cover-tilt" ref={tilt}>
+              <Cover edition={edition} />
+            </div>
+          </div>
+          <div className="ed-head__text">
+            <p className="edition__no enter" style={{ '--d': 0 } as CSSProperties}>
+              No. {edition.no}, {span(cs.meta.timeline)}
+            </p>
+            <h1 id={titleId} className="enter" style={{ '--d': 1 } as CSSProperties}>
+              {project.title}
             </h1>
-            <p className="m-0 max-w-[70ch] text-[17px] text-text-2">{cs.heroSubtitle}</p>
-          </ScrollReveal>
-
-          <ScrollReveal delay={0.1}>
-            <dl className="mt-9 grid overflow-hidden rounded-panel border border-line-2 sm:grid-cols-2 lg:grid-cols-4">
-              {meta.map((m) => (
-                <div key={m.label} className="border-line-2 bg-bg-2 px-5 py-4 max-lg:border-b lg:border-r lg:last:border-r-0">
-                  <dt className="mb-1.5 font-mono text-[10px] uppercase tracking-[0.2em] text-acc-dim">{m.label}</dt>
-                  <dd className="m-0 flex items-center gap-2 text-[15px] font-semibold text-title">
-                    {m.live && <span aria-hidden="true" className="dot-pulse h-[7px] w-[7px] rounded-full bg-acc shadow-[var(--glow-dot)]" />}
-                    {m.value}
-                  </dd>
+            <p className="ed-head__lede enter" style={{ '--d': 2 } as CSSProperties}>
+              {sentence(cs.heroTitle)}. {plain(cs.heroSubtitle)}
+            </p>
+            <dl className="specs enter" style={{ '--d': 3 } as CSSProperties}>
+              <div>
+                <dt>Role</dt>
+                <dd>{sentence(cs.meta.role)}</dd>
+              </div>
+              <div>
+                <dt>Company</dt>
+                <dd>{cs.meta.company}</dd>
+              </div>
+              {edition.specs.slice(0, 3).map(([k, v]) => (
+                <div key={k}>
+                  <dt>{k}</dt>
+                  <dd>{v}</dd>
                 </div>
               ))}
             </dl>
-          </ScrollReveal>
-
-          {(project.liveUrl || project.repoUrl) && (
-            <ScrollReveal delay={0.15}>
-              <div className="mt-8 flex flex-wrap gap-3">
-                {project.liveUrl && (
-                  <ReplayButton href={project.liveUrl} external>
-                    Try the live API ↗
-                  </ReplayButton>
-                )}
-                {project.repoUrl && (
-                  <ReplayButton variant="ghost" href={project.repoUrl} external>
-                    View repository ↗
-                  </ReplayButton>
-                )}
-              </div>
-            </ScrollReveal>
-          )}
+            <div className="actions enter" style={{ '--d': 4 } as CSSProperties}>
+              {project.liveUrl && (
+                <a className="btn btn--ink" href={project.liveUrl} target="_blank" rel="noopener noreferrer">
+                  Try the live API
+                </a>
+              )}
+              {project.repoUrl && (
+                <a className={`btn${project.liveUrl ? '' : ' btn--ink'}`} href={project.repoUrl} target="_blank" rel="noopener noreferrer">
+                  View the repository
+                </a>
+              )}
+              <Link className="btn" to="/#top">
+                Back to the collection
+              </Link>
+            </div>
+          </div>
         </div>
       </header>
 
-      {/* Architecture */}
       {holding && (
-        <section className="border-b border-line-2 bg-bg-2 py-14" aria-label="How it works">
-          <div className={wrap}>
-            <div className={`${tapeline} mb-2`}>
-              <span>How it works</span>
-              <span>{project.title}</span>
+        <section className="ed-return" aria-label="What it returned">
+          <div className="wrap ed-return__grid">
+            <div className="ed-return__figure" data-reveal>
+              <b className="num">{holding.headline.value}</b>
+              <p>{holding.headline.label.charAt(0).toUpperCase() + holding.headline.label.slice(1)}.</p>
             </div>
-            <ScrollReveal>
-              {holding.diagram.kind === 'hex' ? (
-                <HexCoreDiagram {...numeraCore} />
-              ) : (
-                <RelayDiagram nodes={holding.diagram.nodes} className="mt-6" />
-              )}
-            </ScrollReveal>
+            {cs.beforeAfter ? (
+              <div data-reveal style={{ '--d': 1 } as CSSProperties}>
+                <BeforeAfterPanel
+                  before={{ value: cs.beforeAfter.before.value, caption: cs.beforeAfter.before.description }}
+                  after={{ value: cs.beforeAfter.after.value, caption: cs.beforeAfter.after.description }}
+                />
+              </div>
+            ) : (
+              <dl className="ed-return__more" data-reveal style={{ '--d': 1 } as CSSProperties}>
+                {figures.map((m) => (
+                  <div key={m.label}>
+                    <dt>{sentence(m.label)}</dt>
+                    <dd className="num">{m.value}</dd>
+                  </div>
+                ))}
+              </dl>
+            )}
           </div>
         </section>
       )}
 
-      {/* Body */}
-      <div className="mx-auto max-w-[860px] px-7 py-[84px] max-[700px]:px-5">
-        {cs.sections.map((section, i) => {
-          const title = section.label.replace(/^\d+\s*[—-]\s*/, '').trim();
-          const num = section.label.match(/\d+/)?.[0] ?? String(i + 1).padStart(2, '0');
-          const isTech = title.toLowerCase().includes('tech');
-          const isResult = title.toLowerCase().includes('result');
-
-          return (
-            <ScrollReveal key={section.label}>
-              <section className="mb-[72px]">
-                <div className={`${tapeline} mb-3.5`}>
-                  <span>
-                    {num} · {title}
-                  </span>
-                </div>
-                <h2 className={h3}>{section.heading}</h2>
+      <div className="wrap ed-body">
+        <div className="ed-chapters">
+          {chapters.map((section, i) => {
+            const isResult = section.label.toLowerCase().includes('result');
+            return (
+              <section key={section.label} className="ed-chapter" aria-labelledby={`${titleId}-s${i}`} data-reveal>
+                <h2 id={`${titleId}-s${i}`}>{plain(section.heading)}</h2>
                 {section.paragraphs.map((p) => (
-                  <p key={p} className={`${lede} mb-4 max-w-[68ch] leading-[1.75]`}>
-                    {p}
-                  </p>
+                  <p key={p}>{plain(p)}</p>
                 ))}
-
-                {i === 0 && cs.beforeAfter && (
-                  <BeforeAfterPanel
-                    className="mt-7"
-                    before={{ value: cs.beforeAfter.before.value, caption: cs.beforeAfter.before.description }}
-                    after={{ value: cs.beforeAfter.after.value, caption: cs.beforeAfter.after.description }}
-                  />
-                )}
-
-                {i === 1 && moves && (
+                {i === 1 && (
                   <>
-                    <div className={`${tapeline} mb-0 mt-8`}>
-                      <span>Key decisions, annotated</span>
-                    </div>
-                    <Movelist moves={moves} className="mt-3" />
-                  </>
-                )}
-
-                {isTech && (
-                  <div className="mt-5 flex flex-wrap gap-2">
-                    {cs.techStack.map((tech) => (
-                      <Tag key={tech.name}>{tech.name}</Tag>
+                    {techParagraphs.map((p) => (
+                      <p key={p}>{plain(p)}</p>
                     ))}
-                  </div>
-                )}
-
-                {isResult && (
-                  <>
-                    <div className="my-7 grid overflow-hidden rounded-panel border border-line-2 sm:grid-cols-3">
-                      {cs.resultMetrics.map((m) => (
-                        <div key={m.label} className="border-line-2 bg-bg-2 px-5 py-5 max-sm:border-b sm:border-r sm:last:border-r-0">
-                          <DecodeNumber
-                            value={m.value}
-                            className="block font-mono text-[32px] font-medium leading-none text-acc [font-variant-numeric:tabular-nums]"
-                          />
-                          <div className="mt-2 font-mono text-[10px] uppercase tracking-[0.18em] text-text-2">{m.label}</div>
-                        </div>
-                      ))}
-                    </div>
-                    <p className="m-0 font-serif text-[19px] italic leading-[1.5] text-title">{cs.resultSummary}</p>
+                    {holding && (
+                      <p className="ed-decision">
+                        <b>The key decision.</b> {holding.keyDecision}
+                      </p>
+                    )}
+                    <Tag label="Stack" items={cs.techStack.map((t) => t.name)} />
                   </>
                 )}
+                {isResult && <p className="ed-summary">{plain(cs.resultSummary)}</p>}
               </section>
-            </ScrollReveal>
-          );
-        })}
+            );
+          })}
+        </div>
+
+        {holding && (
+          <section className="ed-how" aria-labelledby={`${titleId}-how`} data-reveal>
+            <h2 id={`${titleId}-how`}>How it works</h2>
+            {holding.diagram.kind === 'hex' ? <HexCoreDiagram {...numeraCore} /> : <RelayDiagram nodes={holding.diagram.nodes} />}
+          </section>
+        )}
+
+        {moves && (
+          <section className="ed-notes" aria-labelledby={`${titleId}-notes`} data-reveal>
+            <h2 id={`${titleId}-notes`}>Director’s notes</h2>
+            <p className="ed-notes__lede">The calls that shaped it, annotated the way a chess game is.</p>
+            <Movelist moves={moves} />
+          </section>
+        )}
+
+        {screen && (
+          <figure className="ed-screen" data-reveal>
+            <div className="ed-screen__frame">
+              <img src={screen.src} alt={screen.alt} width={screen.width} height={screen.height} loading="lazy" />
+            </div>
+            <figcaption>{screen.caption}</figcaption>
+          </figure>
+        )}
+
+        {reviews.length > 0 && (
+          <section className="ed-reviews" aria-labelledby={`${titleId}-reviews`}>
+            <h2 id={`${titleId}-reviews`} data-reveal>
+              Reviews
+            </h2>
+            <div className="ed-reviews__grid">
+              {reviews.map((clip) => (
+                <figure key={clip.id} data-reveal>
+                  <blockquote>“{clip.quote}”</blockquote>
+                  <figcaption>
+                    <b>{clip.from}</b>, {clip.headline}, {clip.timecode.replace(' · ', ' ')}
+                  </figcaption>
+                  {clip.screenshotUrl && (
+                    <button
+                      type="button"
+                      className="link linkbutton"
+                      onClick={() => setLightbox({ src: clip.screenshotUrl!, alt: `${clip.headline} recognition post from ${clip.from}` })}
+                    >
+                      See the original post
+                    </button>
+                  )}
+                </figure>
+              ))}
+            </div>
+          </section>
+        )}
       </div>
 
-      {/* Other holdings */}
-      <section className="border-t border-line-2 py-16" aria-label="Other case studies">
-        <div className={wrap}>
-          <div className="flex flex-wrap items-baseline justify-between gap-3">
-            <h2 className={`${h3} mb-0`}>Rest of the book</h2>
-            <Link to="/#work" className={monoLink}>
-              All holdings →
-            </Link>
-          </div>
-          <BookStrip
-            className="mt-8"
-            items={others.map((p) => ({
-              kicker: p.statusLabel,
-              title: p.title,
-              body: p.outcome,
-              href: `/projects/${p.slug}`,
-            }))}
-          />
+      <section className="ed-more" aria-labelledby={`${titleId}-more`}>
+        <div className="wrap">
+          <h2 id={`${titleId}-more`}>More from the collection</h2>
+          <Shelf exclude={project.slug} />
         </div>
       </section>
+      <Lightbox image={lightbox} onClose={closeLightbox} />
     </article>
   );
 }
