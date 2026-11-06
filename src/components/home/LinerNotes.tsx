@@ -1,7 +1,8 @@
 import type { CSSProperties } from 'react';
 import { featureClip } from '../../data/reel';
+import { career, toolkit } from '../../data/toolkit';
 
-/** About, as a short signed letter, beside the recognition it earned. */
+/** About, as a short signed letter beside the career and recognition, then the colophon: what the work is built with. */
 export function LinerNotes() {
   return (
     <section id="about" className="part" aria-labelledby="about-title">
@@ -10,6 +11,18 @@ export function LinerNotes() {
           <h2 id="about-title" data-reveal>
             Liner notes
           </h2>
+          <ol className="career" aria-label="Career" data-reveal style={{ '--d': 1 } as CSSProperties}>
+            {career.map((c) => (
+              <li key={c.title}>
+                <span className="career__dates">{c.dates}</span>
+                <b>{c.title}</b>
+                <span>
+                  {c.org}
+                  {c.note && `. ${c.note}.`}
+                </span>
+              </li>
+            ))}
+          </ol>
           <figure className="award" data-reveal style={{ '--d': 1 } as CSSProperties}>
             <b>
               {featureClip.headline}, {featureClip.timecode.replace(' · ', ' ')}
@@ -61,6 +74,21 @@ export function LinerNotes() {
             <span>Bengaluru</span>
           </div>
         </div>
+      </div>
+
+      <div className="wrap colophon" data-reveal>
+        <div className="colophon__head">
+          <h3>Colophon</h3>
+          <p>Set in Newsreader and Inter Tight. The toolkit behind the work, from the day job to the open-source builds.</p>
+        </div>
+        <dl className="colophon__list">
+          {toolkit.map((t) => (
+            <div key={t.group}>
+              <dt>{t.group}</dt>
+              <dd>{t.items.join(', ')}</dd>
+            </div>
+          ))}
+        </dl>
       </div>
     </section>
   );

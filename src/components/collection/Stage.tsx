@@ -111,6 +111,16 @@ export function Stage({ selected, onSelect }: { selected: number; onSelect: (i: 
           <p className="intro__lead enter" style={d(2)}>
             Yes, my name is a finance acronym. The day job is less ironic: <b>I build production AI and full-stack systems at Sun Life</b>, and report what they return in numbers.
           </p>
+          <dl className="intro__credits enter" style={d(2)}>
+            <div>
+              <dt>Role</dt>
+              <dd>Associate Analyst Development, Sun Life Global Solutions</dd>
+            </div>
+            <div>
+              <dt>Award</dt>
+              <dd>Employee of the Quarter, Q2 2025</dd>
+            </div>
+          </dl>
           <div className="actions enter" style={d(3)}>
             <a className="btn btn--ink" href="#work">
               See the work
